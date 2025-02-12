@@ -19,4 +19,16 @@ interface ShyScoreboardLanguage : LanguageProvider {
   var reloadMessage: LanguageItem
 
   var commonErrorMessage: LanguageItem
+
+  var addCommandHint: LanguageItem
+
+  var removeCommandHint: LanguageItem
+
+  var scoreboardNotFoundMessage: LanguageItem
+
+  var noPermissionToScoreboardCommand: LanguageItem
+
+  var scoreboardAddedMessage: LanguageItem
+
+  var scoreboardRemovedMessage: LanguageItem
 }

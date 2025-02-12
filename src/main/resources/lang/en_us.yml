@@ -34,3 +34,21 @@ reloadMessage:
 commonErrorMessage:
   type: "CHAT"
   text: "[&9MCPlayerStats&f]&c A problem occurred. Check the console log for details."
+addCommandHint:
+  type: "CHAT"
+  text: "[&9ShyScoreboard&f] Adds a scoreboard to a player."
+removeCommandHint:
+  type: "CHAT"
+  text: "[&9ShyScoreboard&f] Removes a scoreboard from a player."
+scoreboardNotFoundMessage:
+  type: "CHAT"
+  text: "[&9ShyScoreboard&f] &cScoreboard %1$1s not found."
+noPermissionToScoreboardCommand:
+  type: "CHAT"
+  text: "[&9ShyScoreboard&f] &cYou do not have permission to this scoreboard."
+scoreboardAddedMessage:
+  type: "CHAT"
+  text: "[&9ShyScoreboard&f] &aAdded the scoreboard %1$1s to the player %2$1s."
+scoreboardRemovedMessage:
+  type: "CHAT"
+  text: "[&9ShyScoreboard&f] &aRemoved the scoreboard %1$1s from the player %2$1s."

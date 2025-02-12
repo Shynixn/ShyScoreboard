@@ -1,4 +1,4 @@
-package com.github.shynixn.shyscoreboard.entity
+package com.github.shynixn.shyscoreboard.enumeration
 
 enum class ShyScoreboardType {
     GLOBAL,

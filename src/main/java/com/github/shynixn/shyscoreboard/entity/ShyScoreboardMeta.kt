@@ -1,6 +1,7 @@
 package com.github.shynixn.shyscoreboard.entity
 
 import com.github.shynixn.mcutils.common.repository.Element
+import com.github.shynixn.shyscoreboard.enumeration.ShyScoreboardType
 
 class ShyScoreboardMeta : Element {
     /**

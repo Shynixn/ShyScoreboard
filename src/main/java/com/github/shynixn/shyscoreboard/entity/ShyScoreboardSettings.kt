@@ -1,0 +1,44 @@
+package com.github.shynixn.shyscoreboard.entity
+
+import com.github.shynixn.shyscoreboard.enumeration.Permission
+
+class ShyScoreboardSettings(private val reloadFun: (ShyScoreboardSettings) -> Unit) {
+    /**
+     * Delay when joining the server.
+     */
+    var joinDelaySeconds = 3
+
+    /**
+     * Permission change seconds.
+     */
+    var checkForPermissionChangeSeconds = 5
+
+    /**
+     * Base Command.
+     */
+    var baseCommand: String = "shyscoreboard"
+
+    /**
+     * Command aliases.
+     */
+    var commandAliases: List<String> = ArrayList<String>()
+
+
+    var commandPermission: String = Permission.COMMAND.text
+
+
+    var reloadPermission: String = Permission.RELOAD.text
+
+    var dynScoreboardPermission: String = Permission.DYN_SCOREBOARD.text
+
+    var addPermission: String = Permission.ADD.text
+
+    var removePermission: String = Permission.REMOVE.text
+
+    /**
+     * Reloads the config.
+     */
+    fun reload() {
+        reloadFun.invoke(this)
+    }
+}
