@@ -30,7 +30,7 @@ dependencies {
 
     // Custom dependencies
     implementation("com.github.shynixn.mcutils:common:2025.4")
-    implementation("com.github.shynixn.mcutils:packet:2025.3")
+    implementation("com.github.shynixn.mcutils:packet:2025.6")
 
     // Test
     testImplementation(kotlin("test"))
