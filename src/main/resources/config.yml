@@ -1,0 +1,24 @@
+#######################################################################
+#                          ShyScoreboard                              #
+# 		            	   by Shynixn							      #
+#######################################################################
+
+############################
+# Language settings
+############################
+language: "en_us"
+
+############################
+# Command settings
+############################
+commands:
+  shyscoreboard:
+    aliases:
+      - "sscoreboard"
+
+############################
+# Global Scoreboard Settings
+############################
+global:
+  # How often are the permissions of a player checked to determine if he has got access to any scoreboard.
+  checkForPermissionChangeSeconds: 3

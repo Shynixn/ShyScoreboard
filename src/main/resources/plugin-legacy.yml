@@ -1,0 +1,5 @@
+name: ShyScoreboard
+version: 1.0.0
+author: Shynixn
+main: com.github.shynixn.shyscoreboard.ShyScoreboardPlugin
+softdepend: [ PlaceholderAPI]
