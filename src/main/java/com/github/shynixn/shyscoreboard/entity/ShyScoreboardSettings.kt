@@ -35,6 +35,8 @@ class ShyScoreboardSettings(private val reloadFun: (ShyScoreboardSettings) -> Un
 
     var removePermission: String = Permission.REMOVE.text
 
+    var updatePermission : String = Permission.UPDATE.text
+
     /**
      * Reloads the config.
      */

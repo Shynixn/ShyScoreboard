@@ -52,3 +52,9 @@ scoreboardAddedMessage:
 scoreboardRemovedMessage:
   type: "CHAT"
   text: "[&9ShyScoreboard&f] &aRemoved the scoreboard %1$1s from the player %2$1s."
+updateCommandHint:
+  type: "CHAT"
+  text: "[&9ShyScoreboard&f] Updates the placeholder of the scoreboard."
+updatedMessage:
+  type: "CHAT"
+  text: "[&9ShyScoreboard&f] Updated the scoreboard."

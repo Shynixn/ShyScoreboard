@@ -119,6 +119,20 @@ class ShyScoreboardCommandExecutor(
                         }
                     }
             }
+            subCommand("update") {
+                permission(settings.updatePermission)
+                toolTip { language.updateCommandHint.text }
+                builder().executePlayer(senderHasToBePlayer) { player ->
+                    plugin.launch {
+                        updatePlayerScoreboard(player, player)
+                    }
+                }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                    .execute { commandSender, player ->
+                        plugin.launch {
+                            updatePlayerScoreboard(commandSender, player)
+                        }
+                    }
+            }
             subCommand("reload") {
                 permission(settings.reloadPermission)
                 toolTip {
@@ -133,6 +147,11 @@ class ShyScoreboardCommandExecutor(
                 }
             }.helpCommand()
         }.build()
+    }
+
+    private fun updatePlayerScoreboard(sender: CommandSender, player: Player) {
+        scoreboardService.getScoreboardFromPlayer(player)?.update()
+        sender.sendPluginMessage(language.updatedMessage)
     }
 
     private fun addScoreboardToPlayer(

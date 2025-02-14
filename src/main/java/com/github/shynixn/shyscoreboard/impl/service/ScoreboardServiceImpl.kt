@@ -137,6 +137,13 @@ class ScoreboardServiceImpl(
     }
 
     /**
+     * Gets the scoreboard of a player.
+     */
+    override fun getScoreboardFromPlayer(player: Player): ShyScoreboard? {
+        return scoreboardCache[player]
+    }
+
+    /**
      * Closes this resource, relinquishing any underlying resources.
      * This method is invoked automatically on objects managed by the
      * `try`-with-resources statement.

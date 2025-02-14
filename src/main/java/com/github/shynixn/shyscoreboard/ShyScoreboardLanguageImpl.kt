@@ -33,4 +33,8 @@ class ShyScoreboardLanguageImpl : ShyScoreboardLanguage {
  override var scoreboardAddedMessage = LanguageItem("[&9ShyScoreboard&f] &aAdded the scoreboard %1$1s to the player %2$1s.")
 
  override var scoreboardRemovedMessage = LanguageItem("[&9ShyScoreboard&f] &aRemoved the scoreboard %1$1s from the player %2$1s.")
+
+ override var updateCommandHint = LanguageItem("[&9ShyScoreboard&f] Updates the placeholder of the scoreboard.")
+
+ override var updatedMessage = LanguageItem("[&9ShyScoreboard&f] Updated the scoreboard.")
 }

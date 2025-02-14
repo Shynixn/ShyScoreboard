@@ -31,4 +31,8 @@ interface ShyScoreboardLanguage : LanguageProvider {
   var scoreboardAddedMessage: LanguageItem
 
   var scoreboardRemovedMessage: LanguageItem
+
+  var updateCommandHint: LanguageItem
+
+  var updatedMessage: LanguageItem
 }

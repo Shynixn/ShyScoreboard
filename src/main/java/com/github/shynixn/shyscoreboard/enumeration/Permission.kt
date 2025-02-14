@@ -5,5 +5,6 @@ enum class Permission(val text: String) {
     RELOAD("shyscoreboard.reload"),
     ADD("shyscoreboard.add"),
     REMOVE("shyscoreboard.remove"),
+    UPDATE("shyscoreboard.update"),
     DYN_SCOREBOARD("shyscoreboard.scoreboard."),
 }

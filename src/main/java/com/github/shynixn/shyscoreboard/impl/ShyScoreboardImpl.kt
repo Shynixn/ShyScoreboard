@@ -1,9 +1,17 @@
 package com.github.shynixn.shyscoreboard.impl
 
+import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
+import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.api.packet.PacketOutScoreBoardDestroy
+import com.github.shynixn.mcutils.packet.api.packet.PacketOutScoreBoardSpawn
+import com.github.shynixn.mcutils.packet.api.packet.PacketOutScoreBoardUpdate
 import com.github.shynixn.shyscoreboard.contract.ShyScoreboard
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
 
 class ShyScoreboardImpl(
     private val id: String,
@@ -18,10 +26,24 @@ class ShyScoreboardImpl(
      * Gets or sets the scoreboard lines.
      */
     override var lines: List<String>,
+
+    /**
+     * How often refreshed.
+     */
+    private var refreshMilliSeconds: Long,
+
     /**
      * PacketService.
      */
-    private var packetService: PacketService?,
+    private var packetService: PacketService,
+    /**
+     * PlaceHolder service.
+     */
+    private var placeHolderService: PlaceHolderService,
+    /**
+     * Plugin
+     */
+    private var plugin: Plugin
 ) : ShyScoreboard {
     /**
      * Gets the player using this scoreboard.
@@ -37,25 +59,57 @@ class ShyScoreboardImpl(
      */
     override var isDisposed: Boolean = false
 
+    init {
+        plugin.launch {
+            val initialPair = resolveTitleAndLines()
+            packetService.sendPacketOutScoreboardSpawn(
+                player,
+                PacketOutScoreBoardSpawn(id, initialPair.first, initialPair.second)
+            )
+
+            while (!isDisposed) {
+                updateAsync()
+                delay(refreshMilliSeconds)
+            }
+        }
+    }
+
+
     /**
      * Performs an immediate update. If you have set a short update interval when creating this scoreboard, you do not need to send update.
      */
     override fun update() {
         checkDisposed()
-
-        TODO("Not yet implemented")
+        plugin.launch {
+            updateAsync()
+        }
     }
 
     /**
      * Disposes this scoreboard permanently.
      */
     override fun close() {
-        if (packetService != null && playerParam != null) {
-            packetService!!.sendPacketOutScoreBoardDestroy(playerParam!!, PacketOutScoreBoardDestroy(id))
+        if (playerParam != null) {
+            packetService.sendPacketOutScoreBoardDestroy(playerParam!!, PacketOutScoreBoardDestroy(id))
         }
         isDisposed = true
         playerParam = null
-        packetService = null
+    }
+
+    private suspend fun updateAsync() {
+        val updatePair = resolveTitleAndLines()
+        packetService.sendPacketOutScoreboardUpdate(
+            player,
+            PacketOutScoreBoardUpdate(id, updatePair.first, updatePair.second)
+        )
+    }
+
+    private suspend fun resolveTitleAndLines(): Pair<String, List<String>> {
+        return withContext(plugin.globalRegionDispatcher) {
+            val finalTitle = placeHolderService.resolvePlaceHolder(title, player)
+            val finalLines = lines.map { line -> placeHolderService.resolvePlaceHolder(line, player) }
+            Pair(finalTitle, finalLines)
+        }
     }
 
     private fun checkDisposed() {

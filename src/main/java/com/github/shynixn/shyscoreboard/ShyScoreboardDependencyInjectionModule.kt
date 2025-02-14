@@ -66,7 +66,7 @@ class ShyScoreboardDependencyInjectionModule(
             ShyScoreboardListener(module.getService(), module.getService(), module.getService())
         }
         module.addService<ScoreboardFactory> {
-            ScoreboardFactoryImpl(module.getService(), module.getService())
+            ScoreboardFactoryImpl(module.getService(), module.getService(), module.getService())
         }
         module.addService<ScoreboardService> {
             ScoreboardServiceImpl(module.getService(), module.getService(), module.getService(), module.getService())

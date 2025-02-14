@@ -19,6 +19,11 @@ interface ScoreboardService : AutoCloseable {
     suspend fun updatePlayerScoreboard(player: Player)
 
     /**
+     * Gets the scoreboard of a player.
+     */
+    fun getScoreboardFromPlayer(player: Player): ShyScoreboard?
+
+    /**
      * Adds a new scoreboard.
      */
     fun addPriorityScoreboard(player: Player, name: String)
