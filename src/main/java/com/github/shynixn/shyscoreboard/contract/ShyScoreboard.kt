@@ -31,7 +31,7 @@ interface ShyScoreboard {
     /**
      * Performs an immediate update. If you have set a short update interval when creating this scoreboard, you do not need to send update.
      */
-    fun update()
+    fun update(respawn: Boolean = false)
 
     /**
      * Disposes this scoreboard permanently.

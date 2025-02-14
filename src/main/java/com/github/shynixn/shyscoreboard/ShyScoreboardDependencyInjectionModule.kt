@@ -43,8 +43,8 @@ class ShyScoreboardDependencyInjectionModule(
         // Repositories
         val templateRepositoryImpl = YamlFileRepositoryImpl<ShyScoreboardMeta>(
             plugin,
-            "scoreboards",
-            listOf("scoreboards/blockball_scoreboard.yml" to "blockball_scoreboard.yml"),
+            "scoreboard",
+            settings.defaultScoreboards,
             emptyList(),
             object : TypeReference<ShyScoreboardMeta>() {})
         val cacheTemplateRepository = CachedRepositoryImpl(templateRepositoryImpl)
@@ -71,12 +71,6 @@ class ShyScoreboardDependencyInjectionModule(
         module.addService<ScoreboardService> {
             ScoreboardServiceImpl(module.getService(), module.getService(), module.getService(), module.getService())
         }
-        Bukkit.getServicesManager().register(
-            ScoreboardService::class.java, module.getService<ScoreboardService>(), plugin, ServicePriority.Normal
-        )
-        Bukkit.getServicesManager().register(
-            ScoreboardFactory::class.java, module.getService<ScoreboardFactory>(), plugin, ServicePriority.Normal
-        )
 
         // Library Services
         module.addService<ConfigurationService>(ConfigurationServiceImpl(plugin))
@@ -87,6 +81,15 @@ class ShyScoreboardDependencyInjectionModule(
         module.addService<ChatMessageService>(chatMessageService)
         plugin.globalChatMessageService = chatMessageService
         plugin.globalPlaceHolderService = placeHolderService
+
+        // Developer Api.
+        Bukkit.getServicesManager().register(
+            ScoreboardService::class.java, module.getService<ScoreboardService>(), plugin, ServicePriority.Normal
+        )
+        Bukkit.getServicesManager().register(
+            ScoreboardFactory::class.java, module.getService<ScoreboardFactory>(), plugin, ServicePriority.Normal
+        )
+
         return module
     }
 }

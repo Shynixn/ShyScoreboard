@@ -21,7 +21,7 @@ class ShyScoreboardSettings(private val reloadFun: (ShyScoreboardSettings) -> Un
     /**
      * Command aliases.
      */
-    var commandAliases: List<String> = ArrayList<String>()
+    var commandAliases: List<String> = ArrayList()
 
 
     var commandPermission: String = Permission.COMMAND.text
@@ -35,7 +35,12 @@ class ShyScoreboardSettings(private val reloadFun: (ShyScoreboardSettings) -> Un
 
     var removePermission: String = Permission.REMOVE.text
 
-    var updatePermission : String = Permission.UPDATE.text
+    var updatePermission: String = Permission.UPDATE.text
+
+    var defaultScoreboards: List<Pair<String, String>> = listOf(
+        "scoreboard/blockball_scoreboard.yml" to "blockball_scoreboard.yml",
+        "scoreboard/sample_scoreboard.yml" to "sample_scoreboard.yml"
+    )
 
     /**
      * Reloads the config.

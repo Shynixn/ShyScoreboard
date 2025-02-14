@@ -150,7 +150,7 @@ class ShyScoreboardCommandExecutor(
     }
 
     private fun updatePlayerScoreboard(sender: CommandSender, player: Player) {
-        scoreboardService.getScoreboardFromPlayer(player)?.update()
+        scoreboardService.getScoreboardFromPlayer(player)?.update(true)
         sender.sendPluginMessage(language.updatedMessage)
     }
 

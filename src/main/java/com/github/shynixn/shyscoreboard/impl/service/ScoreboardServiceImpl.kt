@@ -8,7 +8,6 @@ import com.github.shynixn.shyscoreboard.contract.ScoreboardService
 import com.github.shynixn.shyscoreboard.contract.ShyScoreboard
 import com.github.shynixn.shyscoreboard.entity.ShyScoreboardMeta
 import com.github.shynixn.shyscoreboard.entity.ShyScoreboardSettings
-import com.github.shynixn.shyscoreboard.enumeration.Permission
 import com.github.shynixn.shyscoreboard.enumeration.ShyScoreboardType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -44,7 +43,12 @@ class ScoreboardServiceImpl(
             priorityScoreboard[player] = HashSet()
         }
 
-        priorityScoreboard[player]!!.add(name)
+        if (!priorityScoreboard[player]!!.contains(name)) {
+            priorityScoreboard[player]!!.add(name)
+            plugin.launch {
+                updatePlayerScoreboard(player)
+            }
+        }
     }
 
     /**
@@ -53,6 +57,9 @@ class ScoreboardServiceImpl(
     override fun removePriorityScoreboard(player: Player, name: String) {
         if (priorityScoreboard.containsKey(player)) {
             priorityScoreboard[player]!!.remove(name)
+            plugin.launch {
+                updatePlayerScoreboard(player)
+            }
         }
     }
 
@@ -62,11 +69,11 @@ class ScoreboardServiceImpl(
     override suspend fun reload() {
         repository.clearCache()
         priorityScoreboard.clear()
-        val players = priorityScoreboard.keys.toTypedArray()
+        repository.getAll()
+        val players = scoreboardCache.keys.toTypedArray()
 
         for (player in players) {
             clearData(player)
-            updatePlayerScoreboard(player)
         }
     }
 
@@ -100,7 +107,7 @@ class ScoreboardServiceImpl(
         // Only take a look at global scoreboards if empty.
         if (possibleScoreboardMetas.isEmpty()) {
             for (scoreboard in allScoreboardMetas.asSequence().filter { e -> e.type == ShyScoreboardType.GLOBAL }) {
-                val permission = "${Permission.DYN_SCOREBOARD.text}${scoreboard.name}"
+                val permission = "${settings.dynScoreboardPermission}${scoreboard.name}"
 
                 if (player.hasPermission(permission)) {
                     possibleScoreboardMetas.add(scoreboard)

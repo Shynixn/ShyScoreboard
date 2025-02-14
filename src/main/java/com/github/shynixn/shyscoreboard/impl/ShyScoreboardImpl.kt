@@ -61,11 +61,7 @@ class ShyScoreboardImpl(
 
     init {
         plugin.launch {
-            val initialPair = resolveTitleAndLines()
-            packetService.sendPacketOutScoreboardSpawn(
-                player,
-                PacketOutScoreBoardSpawn(id, initialPair.first, initialPair.second)
-            )
+            sendSpawnPacket()
 
             while (!isDisposed) {
                 updateAsync()
@@ -78,10 +74,15 @@ class ShyScoreboardImpl(
     /**
      * Performs an immediate update. If you have set a short update interval when creating this scoreboard, you do not need to send update.
      */
-    override fun update() {
+    override fun update(respawn: Boolean) {
         checkDisposed()
         plugin.launch {
-            updateAsync()
+            if (respawn) {
+                sendDestroyPacket()
+                sendSpawnPacket()
+            } else {
+                updateAsync()
+            }
         }
     }
 
@@ -90,7 +91,7 @@ class ShyScoreboardImpl(
      */
     override fun close() {
         if (playerParam != null) {
-            packetService.sendPacketOutScoreBoardDestroy(playerParam!!, PacketOutScoreBoardDestroy(id))
+            sendDestroyPacket()
         }
         isDisposed = true
         playerParam = null
@@ -101,6 +102,26 @@ class ShyScoreboardImpl(
         packetService.sendPacketOutScoreboardUpdate(
             player,
             PacketOutScoreBoardUpdate(id, updatePair.first, updatePair.second)
+        )
+    }
+
+    private fun sendDestroyPacket() {
+        if (isDisposed) {
+            return
+        }
+
+        packetService.sendPacketOutScoreBoardDestroy(playerParam!!, PacketOutScoreBoardDestroy(id))
+    }
+
+    private suspend fun sendSpawnPacket() {
+        if (isDisposed) {
+            return
+        }
+
+        val initialPair = resolveTitleAndLines()
+        packetService.sendPacketOutScoreboardSpawn(
+            player,
+            PacketOutScoreBoardSpawn(id, initialPair.first, initialPair.second)
         )
     }
 
