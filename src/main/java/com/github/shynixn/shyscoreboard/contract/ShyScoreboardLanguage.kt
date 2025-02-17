@@ -8,31 +8,31 @@ interface ShyScoreboardLanguage : LanguageProvider {
 
   var noPermissionCommand: LanguageItem
 
-  var commandUsage: LanguageItem
-
-  var commandDescription: LanguageItem
-
-  var commandSenderHasToBePlayer: LanguageItem
-
   var reloadCommandHint: LanguageItem
 
   var reloadMessage: LanguageItem
 
   var commonErrorMessage: LanguageItem
 
-  var addCommandHint: LanguageItem
+  var commandSenderHasToBePlayer: LanguageItem
 
-  var removeCommandHint: LanguageItem
+  var scoreboardCommandUsage: LanguageItem
+
+  var scoreboardCommandDescription: LanguageItem
+
+  var scoreboardAddCommandHint: LanguageItem
+
+  var scoreboardRemoveCommandHint: LanguageItem
 
   var scoreboardNotFoundMessage: LanguageItem
 
-  var noPermissionToScoreboardCommand: LanguageItem
+  var scoreboardNoPermissionToScoreboardCommand: LanguageItem
 
   var scoreboardAddedMessage: LanguageItem
 
   var scoreboardRemovedMessage: LanguageItem
 
-  var updateCommandHint: LanguageItem
+  var scoreboardUpdateCommandHint: LanguageItem
 
-  var updatedMessage: LanguageItem
+  var scoreboardUpdatedMessage: LanguageItem
 }
