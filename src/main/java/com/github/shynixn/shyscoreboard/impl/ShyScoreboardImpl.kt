@@ -99,6 +99,11 @@ class ShyScoreboardImpl(
 
     private suspend fun updateAsync() {
         val updatePair = resolveTitleAndLines()
+
+        if (isDisposed) {
+            return
+        }
+
         packetService.sendPacketOutScoreboardUpdate(
             player,
             PacketOutScoreBoardUpdate(id, updatePair.first, updatePair.second)
@@ -114,11 +119,12 @@ class ShyScoreboardImpl(
     }
 
     private suspend fun sendSpawnPacket() {
+        val initialPair = resolveTitleAndLines()
+
         if (isDisposed) {
             return
         }
 
-        val initialPair = resolveTitleAndLines()
         packetService.sendPacketOutScoreboardSpawn(
             player,
             PacketOutScoreBoardSpawn(id, initialPair.first, initialPair.second)
@@ -127,6 +133,9 @@ class ShyScoreboardImpl(
 
     private suspend fun resolveTitleAndLines(): Pair<String, List<String>> {
         return withContext(plugin.globalRegionDispatcher) {
+            if (isDisposed) {
+                return@withContext Pair(title, emptyList())
+            }
             val finalTitle = placeHolderService.resolvePlaceHolder(title, player)
             val finalLines = lines.map { line -> placeHolderService.resolvePlaceHolder(line, player) }
             Pair(finalTitle, finalLines)
