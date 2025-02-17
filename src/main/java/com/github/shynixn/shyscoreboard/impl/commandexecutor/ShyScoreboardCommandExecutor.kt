@@ -84,14 +84,14 @@ class ShyScoreboardCommandExecutor(
 
     init {
         CommandBuilder(plugin, coroutineExecutor, settings.baseCommand, chatMessageService) {
-            usage(language.commandUsage.text)
-            description(language.commandDescription.text)
+            usage(language.scoreboardCommandUsage.text)
+            description(language.scoreboardCommandDescription.text)
             aliases(settings.commandAliases)
             permission(settings.commandPermission)
             permissionMessage(language.noPermissionCommand.text)
             subCommand("add") {
                 permission(settings.addPermission)
-                toolTip { language.addCommandHint.text }
+                toolTip { language.scoreboardAddCommandHint.text }
                 builder().argument("scoreboard").validator(scoreboardMustExist)
                     .tabs(scoreboardTabs).executePlayer(senderHasToBePlayer) { player, scoreboardMeta ->
                         plugin.launch {
@@ -106,7 +106,7 @@ class ShyScoreboardCommandExecutor(
             }
             subCommand("remove") {
                 permission(settings.removePermission)
-                toolTip { language.removeCommandHint.text }
+                toolTip { language.scoreboardRemoveCommandHint.text }
                 builder().argument("scoreboard").validator(scoreboardMustExist)
                     .tabs(scoreboardTabs).executePlayer(senderHasToBePlayer) { player, scoreboardMeta ->
                         plugin.launch {
@@ -121,7 +121,7 @@ class ShyScoreboardCommandExecutor(
             }
             subCommand("update") {
                 permission(settings.updatePermission)
-                toolTip { language.updateCommandHint.text }
+                toolTip { language.scoreboardUpdateCommandHint.text }
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch {
                         updatePlayerScoreboard(player, player)
@@ -151,7 +151,7 @@ class ShyScoreboardCommandExecutor(
 
     private fun updatePlayerScoreboard(sender: CommandSender, player: Player) {
         scoreboardService.getScoreboardFromPlayer(player)?.update(true)
-        sender.sendPluginMessage(language.updatedMessage)
+        sender.sendPluginMessage(language.scoreboardUpdatedMessage)
     }
 
     private fun addScoreboardToPlayer(
@@ -160,7 +160,7 @@ class ShyScoreboardCommandExecutor(
         player: Player
     ) {
         if (!player.hasPermission("${settings.dynScoreboardPermission}${scoreboardMeta.name}")) {
-            sender.sendPluginMessage(language.noPermissionToScoreboardCommand)
+            sender.sendPluginMessage(language.scoreboardNoPermissionToScoreboardCommand)
             return
         }
 
