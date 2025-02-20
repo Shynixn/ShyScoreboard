@@ -14,7 +14,7 @@ class ShyScoreboardLanguageImpl : ShyScoreboardLanguage {
 
  override var reloadMessage = LanguageItem("[&9ShyScoreboard&f] Reloaded all scoreboards and configuration.")
 
- override var commonErrorMessage = LanguageItem("[&9MCPlayerStats&f]&c A problem occurred. Check the console log for details.")
+ override var commonErrorMessage = LanguageItem("[&9ShyScoreboard&f]&c A problem occurred. Check the console log for details.")
 
  override var commandSenderHasToBePlayer = LanguageItem("[&9ShyScoreboard&f] The command sender has to be a player if you do not specify the optional player argument.")
 
