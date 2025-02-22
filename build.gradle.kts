@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.0.2"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -26,11 +26,10 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.3.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.2.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
-    implementation("org.openjdk.nashorn:nashorn-core:15.4")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.4")
-    implementation("com.github.shynixn.mcutils:packet:2025.6")
+    implementation("com.github.shynixn.mcutils:common:2025.6")
+    implementation("com.github.shynixn.mcutils:packet:2025.9")
 
     // Test
     testImplementation(kotlin("test"))
@@ -64,6 +63,7 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
 tasks.register("pluginJars") {
     dependsOn("pluginJarLatest")
     dependsOn("pluginJarPremium")
+    dependsOn("pluginJarPremiumFolia")
     dependsOn("pluginJarLegacy")
 }
 
@@ -107,6 +107,9 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/google/**")
     exclude("com/fasterxml/**")
     exclude("com/zaxxer/**")
+    exclude("plugin-folia.yml")
+    exclude("plugin-legacy.yml")
+    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
 }
 
 /**
@@ -127,6 +130,44 @@ tasks.register("pluginJarPremium", com.github.jengelman.gradle.plugins.shadow.ta
     exclude("com/zaxxer/**")
     exclude("com/google/**")
     exclude("com/fasterxml/**")
+    exclude("plugin-folia.yml")
+    exclude("plugin-legacy.yml")
+    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
+}
+
+/**
+ * Relocate Plugin Folia Jar.
+ */
+tasks.register("relocateFoliaPluginJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
+    dependsOn("shadowJar")
+    from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
+    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate-folia.${archiveExtension.get()}")
+    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mcutils")
+    relocate("com.fasterxml", "com.github.shynixn.shyscoreboard.lib.com.fasterxml")
+    exclude("plugin.yml")
+    rename("plugin-folia.yml", "plugin.yml")
+}
+
+/**
+ * Create premium folia plugin jar file.
+ */
+tasks.register("pluginJarPremiumFolia", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
+    dependsOn("relocateFoliaPluginJar")
+    from(zipTree(File("./build/libs/" + (tasks.getByName("relocateFoliaPluginJar") as Jar).archiveFileName.get())))
+    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-premium-folia.${archiveExtension.get()}")
+    // destinationDirectory.set(File("C:\\temp\\Folia\\plugins"))
+
+    exclude("com/github/shynixn/mcutils/**")
+    exclude("com/github/shynixn/mccoroutine/**")
+    exclude("kotlin/**")
+    exclude("org/**")
+    exclude("kotlinx/**")
+    exclude("javax/**")
+    exclude("com/zaxxer/**")
+    exclude("com/google/**")
+    exclude("com/fasterxml/**")
+    exclude("plugin-folia.yml")
+    exclude("plugin-legacy.yml")
 }
 
 /**
@@ -174,6 +215,8 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/fasterxml/**")
     exclude("com/zaxxer/**")
     exclude("plugin-legacy.yml")
+    exclude("plugin-folia.yml")
+    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
 }
 
 tasks.register("languageFile") {

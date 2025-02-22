@@ -1,8 +1,10 @@
 package com.github.shynixn.shyscoreboard
 
 import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mccoroutine.folia.mcCoroutineConfiguration
 import com.github.shynixn.mcutils.common.ChatColor
 import com.github.shynixn.mcutils.common.Version
+import com.github.shynixn.mcutils.common.checkIfFoliaIsLoadable
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
@@ -78,6 +80,16 @@ class ShyScoreboardPlugin : JavaPlugin() {
         }
 
         logger.log(Level.INFO, "Loaded NMS version ${Version.serverVersion}.")
+
+        if (mcCoroutineConfiguration.isFoliaLoaded && !checkIfFoliaIsLoadable()) {
+            logger.log(Level.SEVERE, "================================================")
+            logger.log(Level.SEVERE, "ShyScoreboard for Folia requires ShyScoreboard-Premium-Folia.jar")
+            logger.log(Level.SEVERE, "Go to https://www.patreon.com/Shynixn to download it.")
+            logger.log(Level.SEVERE, "Plugin gets now disabled!")
+            logger.log(Level.SEVERE, "================================================")
+            Bukkit.getPluginManager().disablePlugin(this)
+            return
+        }
 
         // Register Language
         val language = ShyScoreboardLanguageImpl()
