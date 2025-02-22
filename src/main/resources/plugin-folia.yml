@@ -4,6 +4,7 @@ author: Shynixn
 main: com.github.shynixn.shyscoreboard.ShyScoreboardPlugin
 softdepend: [ PlaceholderAPI]
 api-version: 1.13
+folia-supported: true
 libraries:
   - com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.21.0
   - com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.21.0
