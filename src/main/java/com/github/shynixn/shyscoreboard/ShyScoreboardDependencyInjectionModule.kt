@@ -43,7 +43,7 @@ class ShyScoreboardDependencyInjectionModule(
         // Repositories
         val templateRepositoryImpl = YamlFileRepositoryImpl<ShyScoreboardMeta>(
             plugin,
-            "scoreboard",
+            plugin.dataFolder.toPath().resolve("scoreboard"),
             settings.defaultScoreboards,
             emptyList(),
             object : TypeReference<ShyScoreboardMeta>() {})
