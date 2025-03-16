@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.8">
     
     
       
@@ -409,6 +409,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#worldguard" class="md-nav__link">
+    <span class="md-ellipsis">
+      WORLDGUARD
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -456,6 +465,15 @@
   <a href="#command_1" class="md-nav__link">
     <span class="md-ellipsis">
       COMMAND
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worldguard_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      WORLDGUARD
     </span>
   </a>
   
@@ -563,6 +581,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#worldguard" class="md-nav__link">
+    <span class="md-ellipsis">
+      WORLDGUARD
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -615,6 +642,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#worldguard_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      WORLDGUARD
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -646,7 +682,7 @@
 
 <h1 id="how-to-create-a-new-scoreboard">How to create a new scoreboard</h1>
 <h2 id="understanding-scoreboard-types">Understanding scoreboard types</h2>
-<p>ShyScoreboard comes with 2 types of scoreboards <code>GLOBAL</code> and <code>COMMAND</code>. Both types can be set in the file of the invidiual scoreboard.</p>
+<p>ShyScoreboard comes with 3 types of scoreboards <code>GLOBAL</code>, <code>COMMAND</code> and <code>WORLDGUARD</code>. All types can be set in the file of the individual scoreboard.</p>
 <h4 id="global">GLOBAL</h4>
 <p>A global scoreboard is always visible as long as a player has got the permission to that scoreboard. For example, if you have got a scoreboard 
 named <code>sample_scoreboard</code> it will always be displayed if a player has got the permission <code>shyscoreboard.scoreboard.sample_scoreboard</code>.</p>
@@ -657,6 +693,9 @@ Global scoreboards automatically detect permission changes and display the corre
 <p>A command scoreboard is only visible after being added via the command <code>/shyscoreboard add &lt;scoreboard&gt; [player]</code> to a player. This ensures a scoreboard is not always visible, which works
 best for servers having <code>OP Players</code>. Add this command to worlds or regions on your server managed by your world or region plugins. This allows to 
 display different scoreboards when a player enters different worlds, regions or minigames.</p>
+<h4 id="worldguard">WORLDGUARD</h4>
+<p>A worldguard scoreboard is only visible after a flag with the name of the scoreboard has been added to an existing WorldGuard region. This is the recommended type
+of scoreboard if you are already using WorldGuard on your server. This type also works with overlapping regions and is compatible to WorldGuard 7 and 6.</p>
 <h2 id="creating-a-scoreboard">Creating a scoreboard</h2>
 <h3 id="managing-files">Managing files</h3>
 <ol>
@@ -681,6 +720,11 @@ display different scoreboards when a player enters different worlds, regions or 
 <ul>
 <li>If you have selected <code>COMMAND</code>, the scoreboard will be visible after you have obtained the <code>shyscoreboard.scoreboard.my_scoreboard</code> permission and executed the command <code>/shyscoreboard add &lt;scoreboard&gt;</code>. </li>
 <li>You need to add the <code>/shyscoreboard add &lt;scoreboard&gt;</code> command and the <code>/shyscoreboard remove &lt;scoreboard&gt;</code> command to all worlds and regions managed by your world and region plugins to display the correct scoreboard in the correct region.</li>
+</ul>
+<h4 id="worldguard_1">WORLDGUARD</h4>
+<ul>
+<li>If you have selected <code>WORLDGUARD</code>, the scoreboard will be visible after you have obtained the <code>shyscoreboard.scoreboard.my_scoreboard</code> permission and entered a WorldGuard region with a flag <code>shyscoreboard</code> set to <code>my_scoreboard</code>.</li>
+<li>You can add this flag via the WorldGuard command <code>/region flag &lt;region&gt; shyscoreboard &lt;scoreboard&gt;</code></li>
 </ul>
 
 
