@@ -2,7 +2,7 @@
 
 ## Understanding scoreboard types
 
-ShyScoreboard comes with 2 types of scoreboards ``GLOBAL`` and ``COMMAND``. Both types can be set in the file of the invidiual scoreboard.
+ShyScoreboard comes with 3 types of scoreboards ``GLOBAL``, ``COMMAND`` and ``WORLDGUARD``. All types can be set in the file of the individual scoreboard.
 
 #### GLOBAL
 
@@ -18,6 +18,11 @@ Global scoreboards automatically detect permission changes and display the corre
 A command scoreboard is only visible after being added via the command ``/shyscoreboard add <scoreboard> [player]`` to a player. This ensures a scoreboard is not always visible, which works
 best for servers having ``OP Players``. Add this command to worlds or regions on your server managed by your world or region plugins. This allows to 
 display different scoreboards when a player enters different worlds, regions or minigames.
+
+#### WORLDGUARD 
+
+A worldguard scoreboard is only visible after a flag with the name of the scoreboard has been added to an existing WorldGuard region. This is the recommended type
+of scoreboard if you are already using WorldGuard on your server. This type also works with overlapping regions and is compatible to WorldGuard 7 and 6.
 
 ## Creating a scoreboard
 
@@ -44,3 +49,8 @@ display different scoreboards when a player enters different worlds, regions or 
 
 * If you have selected ``COMMAND``, the scoreboard will be visible after you have obtained the ``shyscoreboard.scoreboard.my_scoreboard`` permission and executed the command ``/shyscoreboard add <scoreboard>``. 
 * You need to add the ``/shyscoreboard add <scoreboard>`` command and the ``/shyscoreboard remove <scoreboard>`` command to all worlds and regions managed by your world and region plugins to display the correct scoreboard in the correct region.
+
+#### WORLDGUARD
+
+* If you have selected ``WORLDGUARD``, the scoreboard will be visible after you have obtained the ``shyscoreboard.scoreboard.my_scoreboard`` permission and entered a WorldGuard region with a flag ``shyscoreboard`` set to ``my_scoreboard``.
+* You can add this flag via the WorldGuard command ``/region flag <region> shyscoreboard <scoreboard>``
