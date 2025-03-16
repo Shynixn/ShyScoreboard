@@ -4,13 +4,13 @@ import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
 import com.github.shynixn.mccoroutine.folia.ticks
 import com.github.shynixn.mcutils.common.repository.CacheRepository
+import com.github.shynixn.mcutils.worldguard.WorldGuardService
 import com.github.shynixn.shyscoreboard.contract.ScoreboardFactory
 import com.github.shynixn.shyscoreboard.contract.ScoreboardService
 import com.github.shynixn.shyscoreboard.contract.ShyScoreboard
 import com.github.shynixn.shyscoreboard.entity.ShyScoreboardMeta
 import com.github.shynixn.shyscoreboard.entity.ShyScoreboardSettings
 import com.github.shynixn.shyscoreboard.enumeration.ShyScoreboardType
-import com.github.shynixn.shyscoreboard.impl.tmp.WorldGuardService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import org.bukkit.Bukkit

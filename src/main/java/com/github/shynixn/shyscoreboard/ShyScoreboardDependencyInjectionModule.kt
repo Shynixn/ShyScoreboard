@@ -16,6 +16,7 @@ import com.github.shynixn.mcutils.common.repository.YamlFileRepositoryImpl
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.impl.service.ChatMessageServiceImpl
 import com.github.shynixn.mcutils.packet.impl.service.PacketServiceImpl
+import com.github.shynixn.mcutils.worldguard.WorldGuardService
 import com.github.shynixn.shyscoreboard.contract.ScoreboardFactory
 import com.github.shynixn.shyscoreboard.contract.ScoreboardService
 import com.github.shynixn.shyscoreboard.contract.ShyScoreboardLanguage
@@ -25,7 +26,6 @@ import com.github.shynixn.shyscoreboard.impl.commandexecutor.ShyScoreboardComman
 import com.github.shynixn.shyscoreboard.impl.listener.ShyScoreboardListener
 import com.github.shynixn.shyscoreboard.impl.service.ScoreboardFactoryImpl
 import com.github.shynixn.shyscoreboard.impl.service.ScoreboardServiceImpl
-import com.github.shynixn.shyscoreboard.impl.tmp.WorldGuardService
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority

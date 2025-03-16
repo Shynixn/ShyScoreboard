@@ -8,13 +8,13 @@ import com.github.shynixn.mcutils.common.checkIfFoliaIsLoadable
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
+import com.github.shynixn.mcutils.worldguard.WorldGuardService
+import com.github.shynixn.mcutils.worldguard.WorldGuardServiceImpl
 import com.github.shynixn.shyscoreboard.contract.ScoreboardService
 import com.github.shynixn.shyscoreboard.entity.ShyScoreboardSettings
 import com.github.shynixn.shyscoreboard.enumeration.PlaceHolder
 import com.github.shynixn.shyscoreboard.impl.commandexecutor.ShyScoreboardCommandExecutor
 import com.github.shynixn.shyscoreboard.impl.listener.ShyScoreboardListener
-import com.github.shynixn.shyscoreboard.impl.tmp.WorldGuardService
-import com.github.shynixn.shyscoreboard.impl.tmp.WorldGuardServiceImpl
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
