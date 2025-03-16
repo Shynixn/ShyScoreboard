@@ -25,12 +25,13 @@ import com.github.shynixn.shyscoreboard.impl.commandexecutor.ShyScoreboardComman
 import com.github.shynixn.shyscoreboard.impl.listener.ShyScoreboardListener
 import com.github.shynixn.shyscoreboard.impl.service.ScoreboardFactoryImpl
 import com.github.shynixn.shyscoreboard.impl.service.ScoreboardServiceImpl
+import com.github.shynixn.shyscoreboard.impl.tmp.WorldGuardService
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority
 
 class ShyScoreboardDependencyInjectionModule(
-    private val plugin: Plugin, private val settings: ShyScoreboardSettings, private val language: ShyScoreboardLanguage
+    private val plugin: Plugin, private val settings: ShyScoreboardSettings, private val language: ShyScoreboardLanguage, private val worldGuardService: WorldGuardService
 ) {
     fun build(): DependencyInjectionModule {
         val module = DependencyInjectionModule()
@@ -69,7 +70,7 @@ class ShyScoreboardDependencyInjectionModule(
             ScoreboardFactoryImpl(module.getService(), module.getService(), module.getService())
         }
         module.addService<ScoreboardService> {
-            ScoreboardServiceImpl(module.getService(), module.getService(), module.getService(), module.getService())
+            ScoreboardServiceImpl(module.getService(), module.getService(), module.getService(), module.getService(), module.getService())
         }
 
         // Library Services
@@ -79,6 +80,7 @@ class ShyScoreboardDependencyInjectionModule(
         module.addService<PlaceHolderService>(placeHolderService)
         val chatMessageService = ChatMessageServiceImpl(plugin)
         module.addService<ChatMessageService>(chatMessageService)
+        module.addService<WorldGuardService> { worldGuardService }
         plugin.globalChatMessageService = chatMessageService
         plugin.globalPlaceHolderService = placeHolderService
 

@@ -13,12 +13,27 @@ version = "1.1.1"
 repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://maven.enginehub.org/repo/")
     maven(System.getenv("SHYNIXN_MCUTILS_REPOSITORY_2025")) // All MCUTILS libraries are private and not OpenSource.
 }
 
 dependencies {
+    // Dependencies of spigot mojang want to restrict usage to only Java 16. However, we do not care
+    // what they want because the general compatibility of this plugin is Java 8. The plugin
+    // guarantees that everything works during runtime. This error is a false positive.
+    components {
+        all {
+            allVariants {
+                attributes {
+                    attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, 8)
+                }
+            }
+        }
+    }
+
     // Compile Only
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.8")
 
     // Library dependencies with legacy compatibility, we can use more up-to-date version in the plugin.yml
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.21.0")
@@ -29,7 +44,7 @@ dependencies {
 
     // Custom dependencies
     implementation("com.github.shynixn.mcutils:common:2025.9")
-    implementation("com.github.shynixn.mcutils:packet:2025.10")
+    implementation("com.github.shynixn.mcutils:packet:2025.11")
 
     // Test
     testImplementation(kotlin("test"))

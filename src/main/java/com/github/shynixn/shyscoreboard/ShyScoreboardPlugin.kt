@@ -13,6 +13,8 @@ import com.github.shynixn.shyscoreboard.entity.ShyScoreboardSettings
 import com.github.shynixn.shyscoreboard.enumeration.PlaceHolder
 import com.github.shynixn.shyscoreboard.impl.commandexecutor.ShyScoreboardCommandExecutor
 import com.github.shynixn.shyscoreboard.impl.listener.ShyScoreboardListener
+import com.github.shynixn.shyscoreboard.impl.tmp.WorldGuardService
+import com.github.shynixn.shyscoreboard.impl.tmp.WorldGuardServiceImpl
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
@@ -20,6 +22,9 @@ import java.util.logging.Level
 class ShyScoreboardPlugin : JavaPlugin() {
     private val prefix: String = ChatColor.BLUE.toString() + "[ShyScoreboard] " + ChatColor.WHITE
     private var module: DependencyInjectionModule? = null
+    private var worldGuardService: WorldGuardService? = null
+
+    private
 
     companion object {
         private val areLegacyVersionsIncluded: Boolean by lazy {
@@ -100,10 +105,10 @@ class ShyScoreboardPlugin : JavaPlugin() {
         val plugin = this
         val settings = ShyScoreboardSettings { settings ->
             settings.joinDelaySeconds = plugin.config.getInt("global.joinDelaySeconds")
-            settings.checkForPermissionChangeSeconds = plugin.config.getInt("global.checkForPermissionChangeSeconds")
+            settings.checkForChangeChangeSeconds = plugin.config.getInt("global.checkForChangeSeconds")
         }
         settings.reload()
-        this.module = ShyScoreboardDependencyInjectionModule(this, settings, language).build()
+        this.module = ShyScoreboardDependencyInjectionModule(this, settings, language, worldGuardService!!).build()
 
         // Register PlaceHolders
         PlaceHolder.registerAll(
@@ -121,6 +126,12 @@ class ShyScoreboardPlugin : JavaPlugin() {
             scoreboardService.reload()
             Bukkit.getServer().consoleSender.sendMessage(prefix + ChatColor.GREEN + "Enabled ShyScoreboard " + plugin.description.version + " by Shynixn")
         }
+    }
+
+    override fun onLoad() {
+        // Register Flags
+        worldGuardService = WorldGuardServiceImpl(this)
+        worldGuardService!!.registerFlag("shyscoreboard", String::class.java)
     }
 
     override fun onDisable() {

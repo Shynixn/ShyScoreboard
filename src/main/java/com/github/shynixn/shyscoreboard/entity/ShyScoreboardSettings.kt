@@ -11,12 +11,17 @@ class ShyScoreboardSettings(private val reloadFun: (ShyScoreboardSettings) -> Un
     /**
      * Permission change seconds.
      */
-    var checkForPermissionChangeSeconds = 5
+    var checkForChangeChangeSeconds = 5
 
     /**
      * Base Command.
      */
     var baseCommand: String = "shyscoreboard"
+
+    /**
+     * Worldguard flag.
+     */
+    var worldGuardFlag: String = "shyscoreboard"
 
     /**
      * Command aliases.
