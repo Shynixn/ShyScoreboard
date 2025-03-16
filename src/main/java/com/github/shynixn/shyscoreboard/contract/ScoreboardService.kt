@@ -26,10 +26,10 @@ interface ScoreboardService : AutoCloseable {
     /**
      * Adds a new scoreboard.
      */
-    fun addPriorityScoreboard(player: Player, name: String)
+    fun addCommandScoreboard(player: Player, name: String)
 
     /**
      * Removes a new scoreboard.
      */
-    fun removePriorityScoreboard(player: Player, name: String)
+    fun removeCommandScoreboard(player: Player, name: String)
 }

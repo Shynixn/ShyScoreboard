@@ -16,6 +16,7 @@ import com.github.shynixn.mcutils.common.repository.YamlFileRepositoryImpl
 import com.github.shynixn.mcutils.packet.api.PacketService
 import com.github.shynixn.mcutils.packet.impl.service.ChatMessageServiceImpl
 import com.github.shynixn.mcutils.packet.impl.service.PacketServiceImpl
+import com.github.shynixn.mcutils.worldguard.WorldGuardService
 import com.github.shynixn.shyscoreboard.contract.ScoreboardFactory
 import com.github.shynixn.shyscoreboard.contract.ScoreboardService
 import com.github.shynixn.shyscoreboard.contract.ShyScoreboardLanguage
@@ -30,7 +31,7 @@ import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority
 
 class ShyScoreboardDependencyInjectionModule(
-    private val plugin: Plugin, private val settings: ShyScoreboardSettings, private val language: ShyScoreboardLanguage
+    private val plugin: Plugin, private val settings: ShyScoreboardSettings, private val language: ShyScoreboardLanguage, private val worldGuardService: WorldGuardService
 ) {
     fun build(): DependencyInjectionModule {
         val module = DependencyInjectionModule()
@@ -69,7 +70,7 @@ class ShyScoreboardDependencyInjectionModule(
             ScoreboardFactoryImpl(module.getService(), module.getService(), module.getService())
         }
         module.addService<ScoreboardService> {
-            ScoreboardServiceImpl(module.getService(), module.getService(), module.getService(), module.getService())
+            ScoreboardServiceImpl(module.getService(), module.getService(), module.getService(), module.getService(), module.getService())
         }
 
         // Library Services
@@ -79,6 +80,7 @@ class ShyScoreboardDependencyInjectionModule(
         module.addService<PlaceHolderService>(placeHolderService)
         val chatMessageService = ChatMessageServiceImpl(plugin)
         module.addService<ChatMessageService>(chatMessageService)
+        module.addService<WorldGuardService> { worldGuardService }
         plugin.globalChatMessageService = chatMessageService
         plugin.globalPlaceHolderService = placeHolderService
 

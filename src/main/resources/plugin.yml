@@ -1,8 +1,8 @@
 name: ShyScoreboard
-version: 1.1.1
+version: 1.2.0
 author: Shynixn
 main: com.github.shynixn.shyscoreboard.ShyScoreboardPlugin
-softdepend: [ PlaceholderAPI]
+softdepend: [ PlaceholderAPI, WorldGuard]
 api-version: 1.13
 libraries:
   - com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.21.0

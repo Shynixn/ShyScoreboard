@@ -1,8 +1,9 @@
 # Unique identifier of a scoreboard.
 name: "sample_scoreboard"
-# Possible types: GLOBAL, COMMAND
+# Possible types: GLOBAL, COMMAND, WORLDGUARD
 # If GLOBAl, the scoreboard is always visible as long as the player has got the permission shyscoreboard.scoreboard.sample_scoreboard.
 # If COMMAND, the scoreboard is only visible after executing the command /shyscoreboard add sample_scoreboard AND having the permission shyscoreboard.scoreboard.sample_scoreboard.
+# If WORLDGUARD, the scoreboard is only visible after entering a WorldGuard region where the flag shyscoreboard has been set to this scoreboard name.
 type: "GLOBAL"
 # If multiple scoreboards would be available, the one with the highest priority (lowest number), is selected.
 priority: 5

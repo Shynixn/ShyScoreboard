@@ -4,11 +4,11 @@ import java.io.*
 
 plugins {
     id("org.jetbrains.kotlin.jvm") version ("1.9.25")
-    id("com.github.johnrengelman.shadow") version ("7.0.0")
+    id("com.gradleup.shadow") version ("8.3.6")
 }
 
 group = "com.github.shynixn"
-version = "1.1.1"
+version = "1.2.0"
 
 repositories {
     mavenCentral()
@@ -23,13 +23,15 @@ dependencies {
     // Library dependencies with legacy compatibility, we can use more up-to-date version in the plugin.yml
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.21.0")
     implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.21.0")
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.3.0")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.2.3")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.18.2")
+    implementation("org.yaml:snakeyaml:1.33")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
     implementation("com.github.shynixn.mcutils:common:2025.9")
-    implementation("com.github.shynixn.mcutils:packet:2025.10")
+    implementation("com.github.shynixn.mcutils:packet:2025.11")
+    implementation("com.github.shynixn.mcutils:worldguard:2025.3")
 
     // Test
     testImplementation(kotlin("test"))
@@ -107,6 +109,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/google/**")
     exclude("com/fasterxml/**")
     exclude("com/zaxxer/**")
+    exclude("org/yaml")
     exclude("plugin-folia.yml")
     exclude("plugin-legacy.yml")
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
@@ -130,6 +133,7 @@ tasks.register("pluginJarPremium", com.github.jengelman.gradle.plugins.shadow.ta
     exclude("com/zaxxer/**")
     exclude("com/google/**")
     exclude("com/fasterxml/**")
+    exclude("org/yaml")
     exclude("plugin-folia.yml")
     exclude("plugin-legacy.yml")
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
@@ -165,6 +169,7 @@ tasks.register("pluginJarPremiumFolia", com.github.jengelman.gradle.plugins.shad
     exclude("javax/**")
     exclude("com/zaxxer/**")
     exclude("com/google/**")
+    exclude("org/yaml")
     exclude("com/fasterxml/**")
     exclude("plugin-folia.yml")
     exclude("plugin-legacy.yml")
@@ -183,6 +188,7 @@ tasks.register("relocateLegacyPluginJar", com.github.jengelman.gradle.plugins.sh
     relocate("org.aopalliance", "com.github.shynixn.shyscoreboard.lib.org.aopalliance")
     relocate("org.checkerframework", "com.github.shynixn.shyscoreboard.lib.org.checkerframework")
     relocate("org.jetbrains", "com.github.shynixn.shyscoreboard.lib.org.jetbrains")
+    relocate("org.yaml", "com.github.shynixn.shyscoreboard.lib.org.yaml")
     relocate("org.openjdk.nashorn", "com.github.shynixn.shyscoreboard.lib.org.openjdk.nashorn")
     relocate("org.slf4j", "com.github.shynixn.shyscoreboard.lib.org.slf4j")
     relocate("org.objectweb", "com.github.shynixn.shyscoreboard.lib.org.objectweb")

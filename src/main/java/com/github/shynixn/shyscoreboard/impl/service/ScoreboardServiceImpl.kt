@@ -2,7 +2,9 @@ package com.github.shynixn.shyscoreboard.impl.service
 
 import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
+import com.github.shynixn.mccoroutine.folia.ticks
 import com.github.shynixn.mcutils.common.repository.CacheRepository
+import com.github.shynixn.mcutils.worldguard.WorldGuardService
 import com.github.shynixn.shyscoreboard.contract.ScoreboardFactory
 import com.github.shynixn.shyscoreboard.contract.ScoreboardService
 import com.github.shynixn.shyscoreboard.contract.ShyScoreboard
@@ -19,18 +21,18 @@ class ScoreboardServiceImpl(
     private val repository: CacheRepository<ShyScoreboardMeta>,
     private val plugin: Plugin,
     private var settings: ShyScoreboardSettings,
-    private val scoreboardFactory: ScoreboardFactory
-) :
-    ScoreboardService {
+    private val scoreboardFactory: ScoreboardFactory,
+    private val worldGuardService: WorldGuardService
+) : ScoreboardService {
     private val scoreboardCache = HashMap<Player, ShyScoreboard>()
-    private val priorityScoreboard = HashMap<Player, HashSet<String>>()
+    private val commandScoreboards = HashMap<Player, HashSet<String>>()
     private var isDisposed = false
 
     init {
         plugin.launch {
             while (!isDisposed) {
                 reloadActiveScoreboard()
-                delay(settings.checkForPermissionChangeSeconds * 1000L)
+                delay(settings.checkForChangeChangeSeconds * 1000L)
             }
         }
     }
@@ -38,13 +40,13 @@ class ScoreboardServiceImpl(
     /**
      * Adds a new scoreboard.
      */
-    override fun addPriorityScoreboard(player: Player, name: String) {
-        if (!priorityScoreboard.containsKey(player)) {
-            priorityScoreboard[player] = HashSet()
+    override fun addCommandScoreboard(player: Player, name: String) {
+        if (!commandScoreboards.containsKey(player)) {
+            commandScoreboards[player] = HashSet()
         }
 
-        if (!priorityScoreboard[player]!!.contains(name)) {
-            priorityScoreboard[player]!!.add(name)
+        if (!commandScoreboards[player]!!.contains(name)) {
+            commandScoreboards[player]!!.add(name)
             plugin.launch {
                 updatePlayerScoreboard(player)
             }
@@ -54,9 +56,9 @@ class ScoreboardServiceImpl(
     /**
      * Removes a new scoreboard.
      */
-    override fun removePriorityScoreboard(player: Player, name: String) {
-        if (priorityScoreboard.containsKey(player)) {
-            priorityScoreboard[player]!!.remove(name)
+    override fun removeCommandScoreboard(player: Player, name: String) {
+        if (commandScoreboards.containsKey(player)) {
+            commandScoreboards[player]!!.remove(name)
             plugin.launch {
                 updatePlayerScoreboard(player)
             }
@@ -68,7 +70,7 @@ class ScoreboardServiceImpl(
      */
     override suspend fun reload() {
         repository.clearCache()
-        priorityScoreboard.clear()
+        commandScoreboards.clear()
         repository.getAll()
         val players = scoreboardCache.keys.toTypedArray()
 
@@ -83,24 +85,70 @@ class ScoreboardServiceImpl(
     override fun clearData(player: Player) {
         val scoreboard = scoreboardCache.remove(player)
         scoreboard?.close()
-        priorityScoreboard.remove(player)
+        commandScoreboards.remove(player)
     }
 
     /**
      * Checks registered scoreboards for a player and may apply one according to settings.
      */
     override suspend fun updatePlayerScoreboard(player: Player) {
+        val flags = withContext(plugin.globalRegionDispatcher) {
+            val flagValue =
+                worldGuardService.getFlagValue<String>(player, settings.worldGuardFlag, player.location)
+            val flags = ArrayList<String>()
+            if (flagValue != null) {
+                flags.add(flagValue)
+            }
+            flags
+        }
         val allScoreboardMetas = repository.getAll()
+        updatePlayerScoreboard(player, allScoreboardMetas, flags)
+    }
+
+    /**
+     * Gets the scoreboard of a player.
+     */
+    override fun getScoreboardFromPlayer(player: Player): ShyScoreboard? {
+        return scoreboardCache[player]
+    }
+
+    /**
+     * Closes this resource, relinquishing any underlying resources.
+     * This method is invoked automatically on objects managed by the
+     * `try`-with-resources statement.
+     *
+     */
+    override fun close() {
+        val scoreboards = scoreboardCache.values.toTypedArray()
+        for (scoreboard in scoreboards) {
+            scoreboards.clone()
+        }
+        scoreboardCache.clear()
+        commandScoreboards.clear()
+        isDisposed = true
+    }
+
+    private fun updatePlayerScoreboard(
+        player: Player, allScoreboardMetas: List<ShyScoreboardMeta>, regionFlags: List<String>
+    ) {
         val possibleScoreboardMetas = HashSet<ShyScoreboardMeta>()
 
         // Check first if there are commandScoreboards
-        val priorityScoreboards = priorityScoreboard[player]
+        val priorityScoreboards = commandScoreboards[player]
         if (priorityScoreboards != null) {
             for (priorityScoreboard in priorityScoreboards) {
                 val matchingScoreboard = allScoreboardMetas.firstOrNull { e -> e.name.equals(priorityScoreboard, true) }
                 if (matchingScoreboard != null) {
                     possibleScoreboardMetas.add(matchingScoreboard)
                 }
+            }
+        }
+
+        // Then check WorldGuard region flags.
+        if (possibleScoreboardMetas.isEmpty()) {
+            for (scoreboard in allScoreboardMetas.asSequence()
+                .filter { e -> e.type == ShyScoreboardType.WORLDGUARD && regionFlags.contains(e.name) }) {
+                possibleScoreboardMetas.add(scoreboard)
             }
         }
 
@@ -143,36 +191,35 @@ class ScoreboardServiceImpl(
         }
     }
 
-    /**
-     * Gets the scoreboard of a player.
-     */
-    override fun getScoreboardFromPlayer(player: Player): ShyScoreboard? {
-        return scoreboardCache[player]
-    }
-
-    /**
-     * Closes this resource, relinquishing any underlying resources.
-     * This method is invoked automatically on objects managed by the
-     * `try`-with-resources statement.
-     *
-     */
-    override fun close() {
-        val scoreboards = scoreboardCache.values.toTypedArray()
-        for (scoreboard in scoreboards) {
-            scoreboards.clone()
-        }
-        scoreboardCache.clear()
-        priorityScoreboard.clear()
-        isDisposed = true
-    }
-
     private suspend fun reloadActiveScoreboard() {
-        val players = withContext(plugin.globalRegionDispatcher) {
-            ArrayList(Bukkit.getOnlinePlayers())
+        val playerContainers = withContext(plugin.globalRegionDispatcher) {
+            val chunked = ArrayList(Bukkit.getOnlinePlayers()).chunked(30)
+            var shouldWait = false
+            val result = ArrayList<Pair<Player, List<String>>>()
+
+            for (chunk in chunked) {
+                if (shouldWait) {
+                    delay(1.ticks)
+                }
+
+                for (player in chunk) {
+                    val flagValue =
+                        worldGuardService.getFlagValue<String>(player, settings.worldGuardFlag, player.location)
+                    val flags = ArrayList<String>()
+                    if (flagValue != null) {
+                        flags.add(flagValue)
+                    }
+                    result.add(player to flags)
+                }
+
+                shouldWait = true
+            }
+            result
         }
 
-        for (player in players) {
-            updatePlayerScoreboard(player)
+        val allScoreboardMetas = repository.getAll()
+        for (playerContainer in playerContainers) {
+            updatePlayerScoreboard(playerContainer.first, allScoreboardMetas, playerContainer.second)
         }
     }
 }

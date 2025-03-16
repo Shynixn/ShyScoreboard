@@ -164,7 +164,7 @@ class ShyScoreboardCommandExecutor(
             return
         }
 
-        scoreboardService.addPriorityScoreboard(player, scoreboardMeta.name)
+        scoreboardService.addCommandScoreboard(player, scoreboardMeta.name)
         sender.sendPluginMessage(language.scoreboardAddedMessage, scoreboardMeta.name, player.name)
     }
 
@@ -173,7 +173,7 @@ class ShyScoreboardCommandExecutor(
         scoreboardMeta: ShyScoreboardMeta,
         player: Player
     ) {
-        scoreboardService.removePriorityScoreboard(player, scoreboardMeta.name)
+        scoreboardService.removeCommandScoreboard(player, scoreboardMeta.name)
         sender.sendPluginMessage(language.scoreboardRemovedMessage, scoreboardMeta.name, player.name)
     }
 }
