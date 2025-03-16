@@ -188,7 +188,7 @@ tasks.register("relocateLegacyPluginJar", com.github.jengelman.gradle.plugins.sh
     relocate("org.aopalliance", "com.github.shynixn.shyscoreboard.lib.org.aopalliance")
     relocate("org.checkerframework", "com.github.shynixn.shyscoreboard.lib.org.checkerframework")
     relocate("org.jetbrains", "com.github.shynixn.shyscoreboard.lib.org.jetbrains")
-    relocate("org.snakeyaml", "com.github.shynixn.shyscoreboard.lib.org.snakeyaml")
+    relocate("org.yaml", "com.github.shynixn.shyscoreboard.lib.org.yaml")
     relocate("org.openjdk.nashorn", "com.github.shynixn.shyscoreboard.lib.org.openjdk.nashorn")
     relocate("org.slf4j", "com.github.shynixn.shyscoreboard.lib.org.slf4j")
     relocate("org.objectweb", "com.github.shynixn.shyscoreboard.lib.org.objectweb")
