@@ -133,9 +133,7 @@ class ShyScoreboardImpl(
 
     private suspend fun resolveTitleAndLines(): Pair<String, List<String>> {
         return withContext(plugin.globalRegionDispatcher) {
-            if (isDisposed) {
-                return@withContext Pair(title, emptyList())
-            }
+            val player = playerParam ?: return@withContext Pair(title, emptyList())
             val finalTitle = placeHolderService.resolvePlaceHolder(title, player)
             val finalLines = lines.map { line -> placeHolderService.resolvePlaceHolder(line, player) }
             Pair(finalTitle, finalLines)

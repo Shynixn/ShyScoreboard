@@ -29,9 +29,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.9")
-    implementation("com.github.shynixn.mcutils:packet:2025.11")
-    implementation("com.github.shynixn.mcutils:worldguard:2025.3")
+    implementation("com.github.shynixn.mcutils:common:2025.13")
+    implementation("com.github.shynixn.mcutils:packet:2025.14")
+    implementation("com.github.shynixn.mcutils:worldguard:2025.4")
 
     // Test
     testImplementation(kotlin("test"))
