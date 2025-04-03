@@ -1,6 +1,6 @@
 package com.github.shynixn.shyscoreboard
 
-import com.fasterxml.jackson.core.type.TypeReference
+import com.github.shynixn.fasterxml.jackson.core.type.TypeReference
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.ConfigurationServiceImpl
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
