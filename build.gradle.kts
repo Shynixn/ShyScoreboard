@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.3.0"
+version = "1.4.0"
 
 repositories {
     mavenCentral()
@@ -175,9 +175,11 @@ tasks.register("relocateLegacyPluginJar", com.github.jengelman.gradle.plugins.sh
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy-relocate.${archiveExtension.get()}")
     relocate("com.github.shynixn.mcutils", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mcutils")
     relocate("com.github.shynixn.mccoroutine", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mccoroutine")
+    relocate("com.github.shynixn.fasterxml", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.fasterxml")
     relocate("kotlin", "com.github.shynixn.shyscoreboard.lib.kotlin")
     relocate("kotlinx", "com.github.shynixn.shyscoreboard.lib.kotlinx")
-    relocate("org", "com.github.shynixn.shyscoreboard.lib.org")
+    relocate("org.intellij", "com.github.shynixn.shyscoreboard.lib.org.intellij")
+    relocate("org.jetbrains", "com.github.shynixn.shyscoreboard.lib.org.jetbrains")
     relocate("javax", "com.github.shynixn.shyscoreboard.lib.javax")
     exclude("plugin.yml")
     rename("plugin-legacy.yml", "plugin.yml")
@@ -194,6 +196,7 @@ tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")
+    exclude("com/github/shynixn/fasterxml/**")
     exclude("kotlin/**")
     exclude("org/**")
     exclude("kotlinx/**")
