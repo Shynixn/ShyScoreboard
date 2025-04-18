@@ -37,7 +37,7 @@ class ShyScoreboardCommandExecutor(
     }
 
     private val senderHasToBePlayer: () -> String = {
-        language.commandSenderHasToBePlayer.text
+        language.shyScoreboardCommandSenderHasToBePlayer.text
     }
 
     private val playerMustExist = object : Validator<Player> {
@@ -58,12 +58,28 @@ class ShyScoreboardCommandExecutor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.playerNotFoundMessage.text.format(openArgs[0])
+            return language.shyScoreboardPlayerNotFoundMessage.text.format(openArgs[0])
         }
     }
 
-    private val scoreboardTabs: (suspend (CommandSender) -> List<String>) = {
-        repository.getAll().map { e -> e.name }
+    private val scoreboardTabs: (CommandSender) -> List<String> = {
+        repository.getCache()?.map { e -> e.name } ?: emptyList()
+    }
+
+    private val booleanTabs: (CommandSender) -> List<String> = {
+        listOf("true", "false")
+    }
+
+    private val booleanValidator = object : Validator<Boolean> {
+        override suspend fun transform(
+            sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>
+        ): Boolean? {
+            return openArgs[0].toBooleanStrictOrNull()
+        }
+
+        override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
+            return language.shyScoreboardBooleanNotFoundMessage.text.format(openArgs[0])
+        }
     }
 
     private val scoreboardMustExist = object : Validator<ShyScoreboardMeta> {
@@ -74,24 +90,24 @@ class ShyScoreboardCommandExecutor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.scoreboardNotFoundMessage.text.format(openArgs[0])
+            return language.shyScoreboardNotFoundMessage.text.format(openArgs[0])
         }
     }
 
-    private val onlinePlayerTabs: (suspend (CommandSender) -> List<String>) = {
+    private val onlinePlayerTabs: (CommandSender) -> List<String> = {
         Bukkit.getOnlinePlayers().map { e -> e.name }
     }
 
     init {
         CommandBuilder(plugin, coroutineExecutor, settings.baseCommand, chatMessageService) {
-            usage(language.scoreboardCommandUsage.text)
-            description(language.scoreboardCommandDescription.text)
+            usage(language.shyScoreboardCommandUsage.text)
+            description(language.shyScoreboardCommandDescription.text)
             aliases(settings.commandAliases)
             permission(settings.commandPermission)
-            permissionMessage(language.noPermissionCommand.text)
+            permissionMessage(language.shyScoreboardNoPermissionCommand.text)
             subCommand("add") {
                 permission(settings.addPermission)
-                toolTip { language.scoreboardAddCommandHint.text }
+                toolTip { language.shyScoreboardAddCommandHint.text }
                 builder().argument("scoreboard").validator(scoreboardMustExist)
                     .tabs(scoreboardTabs).executePlayer(senderHasToBePlayer) { player, scoreboardMeta ->
                         plugin.launch {
@@ -104,9 +120,24 @@ class ShyScoreboardCommandExecutor(
                         }
                     }
             }
+            subCommand("set") {
+                permission(settings.setPermission)
+                toolTip { language.shyScoreboardSetCommandHint.text }
+                builder().argument("scoreboard").validator(scoreboardMustExist)
+                    .tabs(scoreboardTabs).executePlayer(senderHasToBePlayer) { player, scoreboardMeta ->
+                        plugin.launch {
+                            setScoreboardToPlayer(player, scoreboardMeta, player)
+                        }
+                    }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                    .execute { commandSender, scoreboardMeta, player ->
+                        plugin.launch {
+                            setScoreboardToPlayer(commandSender, scoreboardMeta, player)
+                        }
+                    }
+            }
             subCommand("remove") {
                 permission(settings.removePermission)
-                toolTip { language.scoreboardRemoveCommandHint.text }
+                toolTip { language.shyScoreboardRemoveCommandHint.text }
                 builder().argument("scoreboard").validator(scoreboardMustExist)
                     .tabs(scoreboardTabs).executePlayer(senderHasToBePlayer) { player, scoreboardMeta ->
                         plugin.launch {
@@ -121,37 +152,42 @@ class ShyScoreboardCommandExecutor(
             }
             subCommand("update") {
                 permission(settings.updatePermission)
-                toolTip { language.scoreboardUpdateCommandHint.text }
+                toolTip { language.shyScoreboardUpdateCommandHint.text }
                 builder().executePlayer(senderHasToBePlayer) { player ->
                     plugin.launch {
-                        updatePlayerScoreboard(player, player)
+                        updatePlayerScoreboard(player, true, player)
                     }
-                }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
-                    .execute { commandSender, player ->
+                }.argument("respawn").validator(booleanValidator).tabs(booleanTabs)
+                    .executePlayer(senderHasToBePlayer) { player, flag ->
                         plugin.launch {
-                            updatePlayerScoreboard(commandSender, player)
+                            updatePlayerScoreboard(player, flag, player)
+                        }
+                    }.argument("player").validator(playerMustExist).tabs(onlinePlayerTabs)
+                    .execute { commandSender, flag, player ->
+                        plugin.launch {
+                            updatePlayerScoreboard(commandSender, flag, player)
                         }
                     }
             }
             subCommand("reload") {
                 permission(settings.reloadPermission)
                 toolTip {
-                    language.reloadCommandHint.text
+                    language.shyScoreboardReloadCommandHint.text
                 }
                 builder().execute { sender ->
                     plugin.saveDefaultConfig()
                     plugin.reloadConfig()
                     plugin.reloadTranslation(language)
                     scoreboardService.reload()
-                    sender.sendPluginMessage(language.reloadMessage)
+                    sender.sendPluginMessage(language.shyScoreboardReloadMessage)
                 }
             }.helpCommand()
         }.build()
     }
 
-    private fun updatePlayerScoreboard(sender: CommandSender, player: Player) {
-        scoreboardService.getScoreboardFromPlayer(player)?.update(true)
-        sender.sendPluginMessage(language.scoreboardUpdatedMessage)
+    private fun updatePlayerScoreboard(sender: CommandSender, respawn: Boolean, player: Player) {
+        scoreboardService.getScoreboardFromPlayer(player)?.update(respawn)
+        sender.sendPluginMessage(language.shyScoreboardUpdatedMessage)
     }
 
     private fun addScoreboardToPlayer(
@@ -160,12 +196,30 @@ class ShyScoreboardCommandExecutor(
         player: Player
     ) {
         if (!player.hasPermission("${settings.dynScoreboardPermission}${scoreboardMeta.name}")) {
-            sender.sendPluginMessage(language.scoreboardNoPermissionToScoreboardCommand)
+            sender.sendPluginMessage(language.shyScoreboardNoPermissionToScoreboardCommand)
             return
         }
 
         scoreboardService.addCommandScoreboard(player, scoreboardMeta.name)
-        sender.sendPluginMessage(language.scoreboardAddedMessage, scoreboardMeta.name, player.name)
+        sender.sendPluginMessage(language.shyScoreboardAddedMessage, scoreboardMeta.name, player.name)
+    }
+
+    private fun setScoreboardToPlayer(
+        sender: CommandSender,
+        scoreboardMeta: ShyScoreboardMeta,
+        player: Player
+    ) {
+        if (!player.hasPermission("${settings.dynScoreboardPermission}${scoreboardMeta.name}")) {
+            sender.sendPluginMessage(language.shyScoreboardNoPermissionToScoreboardCommand)
+            return
+        }
+
+        val scoreboards = scoreboardService.getCommandScoreboards(player)
+        for (scoreboard in scoreboards) {
+            scoreboardService.removeCommandScoreboard(player, scoreboard)
+        }
+        scoreboardService.addCommandScoreboard(player, scoreboardMeta.name)
+        sender.sendPluginMessage(language.shyScoreboardAddedMessage, scoreboardMeta.name, player.name)
     }
 
     private fun removeScoreboardFromPlayer(
@@ -174,6 +228,6 @@ class ShyScoreboardCommandExecutor(
         player: Player
     ) {
         scoreboardService.removeCommandScoreboard(player, scoreboardMeta.name)
-        sender.sendPluginMessage(language.scoreboardRemovedMessage, scoreboardMeta.name, player.name)
+        sender.sendPluginMessage(language.shyScoreboardRemovedMessage, scoreboardMeta.name, player.name)
     }
 }

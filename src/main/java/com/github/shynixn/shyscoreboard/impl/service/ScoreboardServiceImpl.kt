@@ -66,6 +66,19 @@ class ScoreboardServiceImpl(
     }
 
     /**
+     * Gets all command scoreboards.
+     */
+    override fun getCommandScoreboards(player: Player): List<String> {
+        val data = commandScoreboards[player]
+
+        if (data != null) {
+            return data.toList()
+        }
+
+        return emptyList()
+    }
+
+    /**
      * Reloads all scoreboards and configuration.
      */
     override suspend fun reload() {

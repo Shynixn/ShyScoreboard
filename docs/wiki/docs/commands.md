@@ -23,10 +23,19 @@ the one with the highest priority is displayed.
 
 Removes a scoreboard with type COMMAND from the given player. If a scoreboard has got type GLOBAl, it does nothing.
 
+### /shyscoreboard set
+
+```
+/shyscoreboard set <scoreboard> [player]
+```
+
+Removes all command based scoreboards in the priority list and applies the given scoreboard.
+
+
 ### /shyscoreboard update
 
 ```
-/shyscoreboard update [player]
+/shyscoreboard update [respawn] [player] 
 ```
 
 Refreshes the scoreboard of the current player. If another scoreboard of another plugin has overwritten this scoreboard, then this fixes the state of the scoreboard of a player.
