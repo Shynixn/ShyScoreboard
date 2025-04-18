@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.4.0"
+version = "1.5.0"
 
 repositories {
     mavenCentral()
@@ -21,14 +21,14 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT")
 
     // Library dependencies with legacy compatibility, we can use more up-to-date version in the plugin.yml
-    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.21.0")
-    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.21.0")
+    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-api:2.22.0")
+    implementation("com.github.shynixn.mccoroutine:mccoroutine-folia-core:2.22.0")
     implementation("com.github.shynixn:fasterxml:1.2.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.16")
-    implementation("com.github.shynixn.mcutils:packet:2025.16")
+    implementation("com.github.shynixn.mcutils:common:2025.20")
+    implementation("com.github.shynixn.mcutils:packet:2025.17")
     implementation("com.github.shynixn.mcutils:worldguard:2025.4")
 
     // Test

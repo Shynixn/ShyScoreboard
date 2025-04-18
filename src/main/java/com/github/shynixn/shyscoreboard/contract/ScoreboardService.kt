@@ -32,4 +32,9 @@ interface ScoreboardService : AutoCloseable {
      * Removes a new scoreboard.
      */
     fun removeCommandScoreboard(player: Player, name: String)
+
+    /**
+     * Gets all command scoreboards.
+     */
+    fun getCommandScoreboards(player: Player) : List<String>
 }

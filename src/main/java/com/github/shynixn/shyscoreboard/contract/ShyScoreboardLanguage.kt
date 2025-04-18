@@ -4,35 +4,39 @@ import com.github.shynixn.mcutils.common.language.LanguageItem
 import com.github.shynixn.mcutils.common.language.LanguageProvider
 
 interface ShyScoreboardLanguage : LanguageProvider {
-  var playerNotFoundMessage: LanguageItem
+  var shyScoreboardPlayerNotFoundMessage: LanguageItem
 
-  var noPermissionCommand: LanguageItem
+  var shyScoreboardNoPermissionCommand: LanguageItem
 
-  var reloadCommandHint: LanguageItem
+  var shyScoreboardReloadCommandHint: LanguageItem
 
-  var reloadMessage: LanguageItem
+  var shyScoreboardReloadMessage: LanguageItem
 
-  var commonErrorMessage: LanguageItem
+  var shyScoreboardCommonErrorMessage: LanguageItem
 
-  var commandSenderHasToBePlayer: LanguageItem
+  var shyScoreboardCommandSenderHasToBePlayer: LanguageItem
 
-  var scoreboardCommandUsage: LanguageItem
+  var shyScoreboardCommandUsage: LanguageItem
 
-  var scoreboardCommandDescription: LanguageItem
+  var shyScoreboardCommandDescription: LanguageItem
 
-  var scoreboardAddCommandHint: LanguageItem
+  var shyScoreboardAddCommandHint: LanguageItem
 
-  var scoreboardRemoveCommandHint: LanguageItem
+  var shyScoreboardSetCommandHint: LanguageItem
 
-  var scoreboardNotFoundMessage: LanguageItem
+  var shyScoreboardRemoveCommandHint: LanguageItem
 
-  var scoreboardNoPermissionToScoreboardCommand: LanguageItem
+  var shyScoreboardNotFoundMessage: LanguageItem
 
-  var scoreboardAddedMessage: LanguageItem
+  var shyScoreboardNoPermissionToScoreboardCommand: LanguageItem
 
-  var scoreboardRemovedMessage: LanguageItem
+  var shyScoreboardAddedMessage: LanguageItem
 
-  var scoreboardUpdateCommandHint: LanguageItem
+  var shyScoreboardRemovedMessage: LanguageItem
 
-  var scoreboardUpdatedMessage: LanguageItem
+  var shyScoreboardUpdateCommandHint: LanguageItem
+
+  var shyScoreboardUpdatedMessage: LanguageItem
+
+  var shyScoreboardBooleanNotFoundMessage: LanguageItem
 }
