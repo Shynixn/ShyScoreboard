@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.2afb09e1.min.css">
       
       
 
@@ -432,6 +432,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#shyscoreboard-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      /shyscoreboard set
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#shyscoreboard-update" class="md-nav__link">
     <span class="md-ellipsis">
       /shyscoreboard update
@@ -510,6 +519,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#shyscoreboard-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      /shyscoreboard set
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#shyscoreboard-update" class="md-nav__link">
     <span class="md-ellipsis">
       /shyscoreboard update
@@ -559,8 +577,12 @@ the one with the highest priority is displayed.</p>
 <div class="highlight"><pre><span></span><code>/shyscoreboard remove &lt;scoreboard&gt; [player]
 </code></pre></div>
 <p>Removes a scoreboard with type COMMAND from the given player. If a scoreboard has got type GLOBAl, it does nothing.</p>
+<h3 id="shyscoreboard-set">/shyscoreboard set</h3>
+<div class="highlight"><pre><span></span><code>/shyscoreboard set &lt;scoreboard&gt; [player]
+</code></pre></div>
+<p>Removes all command based scoreboards in the priority list and applies the given scoreboard.</p>
 <h3 id="shyscoreboard-update">/shyscoreboard update</h3>
-<div class="highlight"><pre><span></span><code>/shyscoreboard update [player]
+<div class="highlight"><pre><span></span><code>/shyscoreboard update [respawn] [player] 
 </code></pre></div>
 <p>Refreshes the scoreboard of the current player. If another scoreboard of another plugin has overwritten this scoreboard, then this fixes the state of the scoreboard of a player.</p>
 <h3 id="shyscoreboard-reload">/shyscoreboard reload</h3>
