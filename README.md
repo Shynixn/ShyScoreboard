@@ -11,7 +11,7 @@ ShyScoreboard is a non-flickering Scoreboard plugin for Bukkit and Folia based M
 * WorldGuard Flag support
 * Bukkit and Folia compatible
 * Runs asynchronously
-* Version support 1.8.R1 - 1.21.R4
+* Version support 1.8.R1 - 1.21.R5
 
 ## Installation
 

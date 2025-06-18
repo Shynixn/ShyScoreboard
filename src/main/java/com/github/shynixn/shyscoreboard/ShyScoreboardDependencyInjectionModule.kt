@@ -31,7 +31,11 @@ import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority
 
 class ShyScoreboardDependencyInjectionModule(
-    private val plugin: Plugin, private val settings: ShyScoreboardSettings, private val language: ShyScoreboardLanguage, private val worldGuardService: WorldGuardService
+    private val plugin: Plugin,
+    private val settings: ShyScoreboardSettings,
+    private val language: ShyScoreboardLanguage,
+    private val worldGuardService: WorldGuardService,
+    private val placeHolderService: PlaceHolderService
 ) {
     fun build(): DependencyInjectionModule {
         val module = DependencyInjectionModule()
@@ -44,6 +48,7 @@ class ShyScoreboardDependencyInjectionModule(
         // Repositories
         val templateRepositoryImpl = YamlFileRepositoryImpl<ShyScoreboardMeta>(
             plugin,
+            "scoreboard",
             plugin.dataFolder.toPath().resolve("scoreboard"),
             settings.defaultScoreboards,
             emptyList(),
@@ -70,13 +75,18 @@ class ShyScoreboardDependencyInjectionModule(
             ScoreboardFactoryImpl(module.getService(), module.getService(), module.getService())
         }
         module.addService<ScoreboardService> {
-            ScoreboardServiceImpl(module.getService(), module.getService(), module.getService(), module.getService(), module.getService())
+            ScoreboardServiceImpl(
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService(),
+                module.getService()
+            )
         }
 
         // Library Services
         module.addService<ConfigurationService>(ConfigurationServiceImpl(plugin))
         module.addService<PacketService>(PacketServiceImpl(plugin))
-        val placeHolderService = PlaceHolderServiceImpl(plugin)
         module.addService<PlaceHolderService>(placeHolderService)
         val chatMessageService = ChatMessageServiceImpl(plugin)
         module.addService<ChatMessageService>(chatMessageService)
