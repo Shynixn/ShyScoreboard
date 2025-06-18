@@ -8,6 +8,7 @@ import com.github.shynixn.mcutils.common.checkIfFoliaIsLoadable
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.language.reloadTranslation
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderServiceImpl
 import com.github.shynixn.mcutils.worldguard.WorldGuardService
 import com.github.shynixn.mcutils.worldguard.WorldGuardServiceImpl
 import com.github.shynixn.shyscoreboard.contract.ScoreboardService
@@ -69,9 +70,10 @@ class ShyScoreboardPlugin : JavaPlugin() {
                 Version.VERSION_1_21_R2,
                 Version.VERSION_1_21_R3,
                 Version.VERSION_1_21_R4,
+                Version.VERSION_1_21_R5
             )
         } else {
-            listOf(Version.VERSION_1_21_R4)
+            listOf(Version.VERSION_1_21_R5)
         }
 
         if (!Version.serverVersion.isCompatible(*versions.toTypedArray())) {
@@ -109,7 +111,8 @@ class ShyScoreboardPlugin : JavaPlugin() {
             settings.checkForChangeChangeSeconds = plugin.config.getInt("global.checkForChangeSeconds")
         }
         settings.reload()
-        this.module = ShyScoreboardDependencyInjectionModule(this, settings, language, worldGuardService!!).build()
+        val placeHolderService = PlaceHolderServiceImpl(this)
+        this.module = ShyScoreboardDependencyInjectionModule(this, settings, language, worldGuardService!!, placeHolderService).build()
 
         // Register PlaceHolders
         PlaceHolder.registerAll(
