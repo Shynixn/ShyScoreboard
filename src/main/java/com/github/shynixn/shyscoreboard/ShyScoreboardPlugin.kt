@@ -1,8 +1,8 @@
 package com.github.shynixn.shyscoreboard
 
-import com.github.shynixn.mccoroutine.folia.launch
-import com.github.shynixn.mccoroutine.folia.mcCoroutineConfiguration
+import com.github.shynixn.mccoroutine.folia.*
 import com.github.shynixn.mcutils.common.ChatColor
+import com.github.shynixn.mcutils.common.CoroutinePlugin
 import com.github.shynixn.mcutils.common.Version
 import com.github.shynixn.mcutils.common.checkIfFoliaIsLoadable
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
@@ -16,11 +16,15 @@ import com.github.shynixn.shyscoreboard.entity.ShyScoreboardSettings
 import com.github.shynixn.shyscoreboard.enumeration.PlaceHolder
 import com.github.shynixn.shyscoreboard.impl.commandexecutor.ShyScoreboardCommandExecutor
 import com.github.shynixn.shyscoreboard.impl.listener.ShyScoreboardListener
+import kotlinx.coroutines.Job
 import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.entity.Entity
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
+import kotlin.coroutines.CoroutineContext
 
-class ShyScoreboardPlugin : JavaPlugin() {
+class ShyScoreboardPlugin : JavaPlugin(), CoroutinePlugin {
     private val prefix: String = ChatColor.BLUE.toString() + "[ShyScoreboard] " + ChatColor.WHITE
     private var module: DependencyInjectionModule? = null
     private var worldGuardService: WorldGuardService? = null
@@ -112,7 +116,13 @@ class ShyScoreboardPlugin : JavaPlugin() {
         }
         settings.reload()
         val placeHolderService = PlaceHolderServiceImpl(this)
-        this.module = ShyScoreboardDependencyInjectionModule(this, settings, language, worldGuardService!!, placeHolderService).build()
+        this.module = ShyScoreboardDependencyInjectionModule(
+            this,
+            settings,
+            language,
+            worldGuardService!!,
+            placeHolderService
+        ).build()
 
         // Register PlaceHolders
         PlaceHolder.registerAll(
@@ -136,6 +146,24 @@ class ShyScoreboardPlugin : JavaPlugin() {
         // Register Flags
         worldGuardService = WorldGuardServiceImpl(this)
         worldGuardService!!.registerFlag("shyscoreboard", String::class.java)
+    }
+
+    override fun execute(f: suspend () -> Unit): Job {
+        return launch {
+            f.invoke()
+        }
+    }
+
+    override fun fetchEntityDispatcher(entity: Entity): CoroutineContext {
+        return entityDispatcher(entity)
+    }
+
+    override fun fetchGlobalRegionDispatcher(): CoroutineContext {
+        return globalRegionDispatcher
+    }
+
+    override fun fetchLocationDispatcher(location: Location): CoroutineContext {
+        return regionDispatcher(location)
     }
 
     override fun onDisable() {

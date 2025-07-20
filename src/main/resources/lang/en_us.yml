@@ -4,7 +4,7 @@ shyScoreboardPlayerNotFoundMessage:
   # Please notice that some messages do only support chat.
   type: "CHAT"
   # The primary text to be sent.
-  text: "[&9ShyScoreboard&f] &cPlayer %1$1s not found."
+  text: "[&9ShyScoreboard&f] &cPlayer %shyscoreboard_param_1% not found."
   # Only available for type "TITLE". Adds a subTitle.
   subTitle: ""
   # Only available for type: "TITLE". Adds a fade in effect.
@@ -45,16 +45,16 @@ shyScoreboardRemoveCommandHint:
   text: "Removes a scoreboard from a player."
 shyScoreboardNotFoundMessage:
   type: "CHAT"
-  text: "[&9ShyScoreboard&f] &cScoreboard %1$1s not found."
+  text: "[&9ShyScoreboard&f] &cScoreboard %shyscoreboard_param_1% not found."
 shyScoreboardNoPermissionToScoreboardCommand:
   type: "CHAT"
   text: "[&9ShyScoreboard&f] &cYou do not have permission to this scoreboard."
 shyScoreboardAddedMessage:
   type: "CHAT"
-  text: "[&9ShyScoreboard&f] Added the scoreboard %1$1s to the player %2$1s."
+  text: "[&9ShyScoreboard&f] Added the scoreboard %shyscoreboard_param_1% to the player %shyscoreboard_param_2%."
 shyScoreboardRemovedMessage:
   type: "CHAT"
-  text: "[&9ShyScoreboard&f] Removed the scoreboard %1$1s from the player %2$1s."
+  text: "[&9ShyScoreboard&f] Removed the scoreboard %shyscoreboard_param_1% from the player %shyscoreboard_param_2%."
 shyScoreboardUpdateCommandHint:
   type: "CHAT"
   text: "Updates the placeholder of the scoreboard."
