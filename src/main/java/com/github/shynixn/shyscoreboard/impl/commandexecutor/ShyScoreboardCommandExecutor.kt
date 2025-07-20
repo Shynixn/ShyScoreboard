@@ -2,12 +2,13 @@ package com.github.shynixn.shyscoreboard.impl.commandexecutor
 
 import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
-import com.github.shynixn.mcutils.common.CoroutineExecutor
+import com.github.shynixn.mcutils.common.CoroutinePlugin
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandBuilder
 import com.github.shynixn.mcutils.common.command.Validator
+import com.github.shynixn.mcutils.common.language.LanguageItem
 import com.github.shynixn.mcutils.common.language.reloadTranslation
-import com.github.shynixn.mcutils.common.language.sendPluginMessage
+import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.repository.CacheRepository
 import com.github.shynixn.shyscoreboard.contract.ScoreboardService
 import com.github.shynixn.shyscoreboard.contract.ShyScoreboardLanguage
@@ -16,26 +17,17 @@ import com.github.shynixn.shyscoreboard.entity.ShyScoreboardSettings
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.plugin.Plugin
 import java.util.*
 
 class ShyScoreboardCommandExecutor(
     private val settings: ShyScoreboardSettings,
-    private val plugin: Plugin,
+    private val plugin: CoroutinePlugin,
     private val scoreboardService: ScoreboardService,
     private val language: ShyScoreboardLanguage,
-    chatMessageService: ChatMessageService,
+    private val chatMessageService: ChatMessageService,
     private val repository: CacheRepository<ShyScoreboardMeta>,
+    private val placeHolderService: PlaceHolderService
 ) {
-
-    private val coroutineExecutor = object : CoroutineExecutor {
-        override fun execute(f: suspend () -> Unit) {
-            plugin.launch(plugin.globalRegionDispatcher) {
-                f.invoke()
-            }
-        }
-    }
-
     private val senderHasToBePlayer: () -> String = {
         language.shyScoreboardCommandSenderHasToBePlayer.text
     }
@@ -58,7 +50,11 @@ class ShyScoreboardCommandExecutor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.shyScoreboardPlayerNotFoundMessage.text.format(openArgs[0])
+            return placeHolderService.resolvePlaceHolder(
+                language.shyScoreboardPlayerNotFoundMessage.text,
+                null,
+                mapOf("0" to openArgs[0])
+            )
         }
     }
 
@@ -78,7 +74,11 @@ class ShyScoreboardCommandExecutor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.shyScoreboardBooleanNotFoundMessage.text.format(openArgs[0])
+            return placeHolderService.resolvePlaceHolder(
+                language.shyScoreboardBooleanNotFoundMessage.text,
+                null,
+                mapOf("0" to openArgs[0])
+            )
         }
     }
 
@@ -90,7 +90,11 @@ class ShyScoreboardCommandExecutor(
         }
 
         override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return language.shyScoreboardNotFoundMessage.text.format(openArgs[0])
+            return placeHolderService.resolvePlaceHolder(
+                language.shyScoreboardNotFoundMessage.text,
+                null,
+                mapOf("0" to openArgs[0])
+            )
         }
     }
 
@@ -99,7 +103,7 @@ class ShyScoreboardCommandExecutor(
     }
 
     init {
-        CommandBuilder(plugin, coroutineExecutor, settings.baseCommand, chatMessageService) {
+        CommandBuilder(plugin, settings.baseCommand, chatMessageService) {
             usage(language.shyScoreboardCommandUsage.text)
             description(language.shyScoreboardCommandDescription.text)
             aliases(settings.commandAliases)
@@ -179,7 +183,7 @@ class ShyScoreboardCommandExecutor(
                     plugin.reloadConfig()
                     plugin.reloadTranslation(language)
                     scoreboardService.reload()
-                    sender.sendPluginMessage(language.shyScoreboardReloadMessage)
+                    sender.sendLanguageMessage(language.shyScoreboardReloadMessage)
                 }
             }.helpCommand()
         }.build()
@@ -187,7 +191,7 @@ class ShyScoreboardCommandExecutor(
 
     private fun updatePlayerScoreboard(sender: CommandSender, respawn: Boolean, player: Player) {
         scoreboardService.getScoreboardFromPlayer(player)?.update(respawn)
-        sender.sendPluginMessage(language.shyScoreboardUpdatedMessage)
+        sender.sendLanguageMessage(language.shyScoreboardUpdatedMessage)
     }
 
     private fun addScoreboardToPlayer(
@@ -196,12 +200,12 @@ class ShyScoreboardCommandExecutor(
         player: Player
     ) {
         if (!player.hasPermission("${settings.dynScoreboardPermission}${scoreboardMeta.name}")) {
-            sender.sendPluginMessage(language.shyScoreboardNoPermissionToScoreboardCommand)
+            sender.sendLanguageMessage(language.shyScoreboardNoPermissionToScoreboardCommand)
             return
         }
 
         scoreboardService.addCommandScoreboard(player, scoreboardMeta.name)
-        sender.sendPluginMessage(language.shyScoreboardAddedMessage, scoreboardMeta.name, player.name)
+        sender.sendLanguageMessage(language.shyScoreboardAddedMessage, scoreboardMeta.name, player.name)
     }
 
     private fun setScoreboardToPlayer(
@@ -210,7 +214,7 @@ class ShyScoreboardCommandExecutor(
         player: Player
     ) {
         if (!player.hasPermission("${settings.dynScoreboardPermission}${scoreboardMeta.name}")) {
-            sender.sendPluginMessage(language.shyScoreboardNoPermissionToScoreboardCommand)
+            sender.sendLanguageMessage(language.shyScoreboardNoPermissionToScoreboardCommand)
             return
         }
 
@@ -219,7 +223,7 @@ class ShyScoreboardCommandExecutor(
             scoreboardService.removeCommandScoreboard(player, scoreboard)
         }
         scoreboardService.addCommandScoreboard(player, scoreboardMeta.name)
-        sender.sendPluginMessage(language.shyScoreboardAddedMessage, scoreboardMeta.name, player.name)
+        sender.sendLanguageMessage(language.shyScoreboardAddedMessage, scoreboardMeta.name, player.name)
     }
 
     private fun removeScoreboardFromPlayer(
@@ -228,6 +232,13 @@ class ShyScoreboardCommandExecutor(
         player: Player
     ) {
         scoreboardService.removeCommandScoreboard(player, scoreboardMeta.name)
-        sender.sendPluginMessage(language.shyScoreboardRemovedMessage, scoreboardMeta.name, player.name)
+        sender.sendLanguageMessage(language.shyScoreboardRemovedMessage, scoreboardMeta.name, player.name)
+    }
+
+    private fun CommandSender.sendLanguageMessage(languageItem: LanguageItem, vararg args: String) {
+        val sender = this
+        plugin.launch(plugin.globalRegionDispatcher) {
+            chatMessageService.sendLanguageMessage(sender, languageItem, *args)
+        }
     }
 }

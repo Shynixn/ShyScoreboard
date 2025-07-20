@@ -7,9 +7,17 @@ import java.util.*
 
 enum class PlaceHolder(
     val text: String,
-    val f: ((Player?) -> String?),
+    val f: ((Player?, Map<String, Any>) -> String?),
 ) {
-    PLAYER_NAME("player_name", { p -> p?.name });
+    PLAYER_NAME("player_name", { p, _ -> p?.name }),
+    PARAM_1("param_1", { _, context ->
+        val item = context["0"] as String?
+        item
+    }),
+    PARAM_2("param_2", { _, context ->
+        val item = context["1"] as String?
+        item
+    });
 
     fun getFullPlaceHolder(plugin: Plugin): String {
         return "%${plugin.name.lowercase(Locale.ENGLISH)}_${text}%"
@@ -24,8 +32,8 @@ enum class PlaceHolder(
             placeHolderService: PlaceHolderService,
         ) {
             for (placeHolder in PlaceHolder.values()) {
-                placeHolderService.register(placeHolder.getFullPlaceHolder(plugin)) { player, _ ->
-                    placeHolder.f.invoke(player)
+                placeHolderService.register(placeHolder.getFullPlaceHolder(plugin)) { player, context ->
+                    placeHolder.f.invoke(player, context)
                 }
             }
         }

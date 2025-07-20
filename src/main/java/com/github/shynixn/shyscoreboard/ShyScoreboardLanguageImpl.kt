@@ -6,7 +6,7 @@ import com.github.shynixn.shyscoreboard.contract.ShyScoreboardLanguage
 class ShyScoreboardLanguageImpl : ShyScoreboardLanguage {
  override val names: List<String>
   get() = listOf("en_us")
- override var shyScoreboardPlayerNotFoundMessage = LanguageItem("[&9ShyScoreboard&f] &cPlayer %1$1s not found.")
+ override var shyScoreboardPlayerNotFoundMessage = LanguageItem("[&9ShyScoreboard&f] &cPlayer %shyscoreboard_param_1% not found.")
 
  override var shyScoreboardNoPermissionCommand = LanguageItem("[&9ShyScoreboard&f] &cYou do not have permission to execute this command.")
 
@@ -28,13 +28,13 @@ class ShyScoreboardLanguageImpl : ShyScoreboardLanguage {
 
  override var shyScoreboardRemoveCommandHint = LanguageItem("Removes a scoreboard from a player.")
 
- override var shyScoreboardNotFoundMessage = LanguageItem("[&9ShyScoreboard&f] &cScoreboard %1$1s not found.")
+ override var shyScoreboardNotFoundMessage = LanguageItem("[&9ShyScoreboard&f] &cScoreboard %shyscoreboard_param_1% not found.")
 
  override var shyScoreboardNoPermissionToScoreboardCommand = LanguageItem("[&9ShyScoreboard&f] &cYou do not have permission to this scoreboard.")
 
- override var shyScoreboardAddedMessage = LanguageItem("[&9ShyScoreboard&f] Added the scoreboard %1$1s to the player %2$1s.")
+ override var shyScoreboardAddedMessage = LanguageItem("[&9ShyScoreboard&f] Added the scoreboard %shyscoreboard_param_1% to the player %shyscoreboard_param_2%.")
 
- override var shyScoreboardRemovedMessage = LanguageItem("[&9ShyScoreboard&f] Removed the scoreboard %1$1s from the player %2$1s.")
+ override var shyScoreboardRemovedMessage = LanguageItem("[&9ShyScoreboard&f] Removed the scoreboard %shyscoreboard_param_1% from the player %shyscoreboard_param_2%.")
 
  override var shyScoreboardUpdateCommandHint = LanguageItem("Updates the placeholder of the scoreboard.")
 
