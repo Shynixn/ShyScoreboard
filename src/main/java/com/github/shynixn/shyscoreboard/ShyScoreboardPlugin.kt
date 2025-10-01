@@ -74,10 +74,11 @@ class ShyScoreboardPlugin : JavaPlugin(), CoroutinePlugin {
                 Version.VERSION_1_21_R2,
                 Version.VERSION_1_21_R3,
                 Version.VERSION_1_21_R4,
-                Version.VERSION_1_21_R5
+                Version.VERSION_1_21_R5,
+                Version.VERSION_1_21_R6
             )
         } else {
-            listOf(Version.VERSION_1_21_R5)
+            listOf(Version.VERSION_1_21_R6)
         }
 
         if (!Version.serverVersion.isCompatible(*versions.toTypedArray())) {
@@ -146,6 +147,15 @@ class ShyScoreboardPlugin : JavaPlugin(), CoroutinePlugin {
         // Register Flags
         worldGuardService = WorldGuardServiceImpl(this)
         worldGuardService!!.registerFlag("shyscoreboard", String::class.java)
+    }
+
+    override fun execute(
+        coroutineContext: CoroutineContext,
+        f: suspend () -> Unit
+    ): Job {
+        return launch(coroutineContext) {
+            f.invoke()
+        }
     }
 
     override fun execute(f: suspend () -> Unit): Job {
