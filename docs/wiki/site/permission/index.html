@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#permission" class="md-skip">
+        <a href="#permissions-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -370,11 +370,53 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#levels" class="md-nav__link">
+  <a href="#permission-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      Levels
+      🔐 Permission Levels
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-permission-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Complete Permission Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-scoreboard-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Understanding Scoreboard Permissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Understanding Scoreboard Permissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wildcard-permission-shyscoreboardscoreboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wildcard Permission: shyscoreboard.scoreboard.*
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specific-scoreboard-permission-shyscoreboardscoreboardname" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specific Scoreboard Permission: shyscoreboard.scoreboard.&lt;name&gt;
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -467,11 +509,53 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#levels" class="md-nav__link">
+  <a href="#permission-levels" class="md-nav__link">
     <span class="md-ellipsis">
-      Levels
+      🔐 Permission Levels
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-permission-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      📋 Complete Permission Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#understanding-scoreboard-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎯 Understanding Scoreboard Permissions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🎯 Understanding Scoreboard Permissions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wildcard-permission-shyscoreboardscoreboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wildcard Permission: shyscoreboard.scoreboard.*
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specific-scoreboard-permission-shyscoreboardscoreboardname" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specific Scoreboard Permission: shyscoreboard.scoreboard.&lt;name&gt;
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -494,64 +578,93 @@
   
 
 
-<h1 id="permission">Permission</h1>
-<p>The following permissions are available in ShyScoreboard.</p>
-<h4 id="levels">Levels</h4>
+<h1 id="permissions-guide">Permissions Guide</h1>
+<p>This guide explains all permission nodes available in ShyScoreboard and how to properly configure them for your server. Understanding permissions is crucial for controlling who can see which scoreboards and who can manage them.</p>
+<h2 id="permission-levels">🔐 Permission Levels</h2>
+<p>ShyScoreboard uses two permission levels:</p>
 <ul>
-<li>User: A permission all players can have.</li>
-<li>Admin: A permission only admins should have.</li>
+<li><strong>👤 User Level</strong>: Permissions that regular players can have</li>
+<li><strong>🛡️ Admin Level</strong>: Permissions that should only be given to trusted staff</li>
 </ul>
+<hr />
+<h2 id="complete-permission-reference">📋 Complete Permission Reference</h2>
 <table>
 <thead>
 <tr>
 <th>Permission</th>
 <th>Level</th>
 <th>Description</th>
+<th>Required For</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>shyscoreboard.scoreboard.*</td>
-<td>User</td>
-<td>Allows to see all scoreboards</td>
+<td><code>shyscoreboard.scoreboard.*</code></td>
+<td>👤 User</td>
+<td>Access to <strong>all</strong> scoreboards</td>
+<td>Seeing any scoreboard</td>
 </tr>
 <tr>
-<td>shyscoreboard.scoreboard.[scoreboard-name]</td>
-<td>User</td>
-<td>Allows to see a specific scoreboard</td>
+<td><code>shyscoreboard.scoreboard.&lt;name&gt;</code></td>
+<td>👤 User</td>
+<td>Access to a <strong>specific</strong> scoreboard</td>
+<td>Seeing named scoreboard</td>
 </tr>
 <tr>
-<td>shyscoreboard.command</td>
-<td>Admin</td>
-<td>Allows to use the /shyscoreboard command.</td>
+<td><code>shyscoreboard.command</code></td>
+<td>🛡️ Admin</td>
+<td>Use the base <code>/shyscoreboard</code> command</td>
+<td>Running any command</td>
 </tr>
 <tr>
-<td>shyscoreboard.reload</td>
-<td>Admin</td>
-<td>Allows to reload configurations.</td>
+<td><code>shyscoreboard.reload</code></td>
+<td>🛡️ Admin</td>
+<td>Reload plugin configurations</td>
+<td><code>/shyscoreboard reload</code></td>
 </tr>
 <tr>
-<td>shyscoreboard.add</td>
-<td>Admin</td>
-<td>Allows to add a scoreboard to a player</td>
+<td><code>shyscoreboard.add</code></td>
+<td>🛡️ Admin</td>
+<td>Add scoreboards to players</td>
+<td><code>/shyscoreboard add</code></td>
 </tr>
 <tr>
-<td>shyscoreboard.set</td>
-<td>Admin</td>
-<td>Allows to set a scoreboard to a player</td>
+<td><code>shyscoreboard.set</code></td>
+<td>🛡️ Admin</td>
+<td>Set specific scoreboard for players</td>
+<td><code>/shyscoreboard set</code></td>
 </tr>
 <tr>
-<td>shyscoreboard.remove</td>
-<td>Admin</td>
-<td>Allows to remove a scoreboard from a player</td>
+<td><code>shyscoreboard.remove</code></td>
+<td>🛡️ Admin</td>
+<td>Remove scoreboards from players</td>
+<td><code>/shyscoreboard remove</code></td>
 </tr>
 <tr>
-<td>shyscoreboard.update</td>
-<td>Admin</td>
-<td>Allows to refresh a scoreboard</td>
+<td><code>shyscoreboard.update</code></td>
+<td>🛡️ Admin</td>
+<td>Refresh player scoreboards</td>
+<td><code>/shyscoreboard update</code></td>
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="understanding-scoreboard-permissions">🎯 Understanding Scoreboard Permissions</h2>
+<h3 id="wildcard-permission-shyscoreboardscoreboard">Wildcard Permission: <code>shyscoreboard.scoreboard.*</code></h3>
+<p><strong>Use case:</strong> Give players access to ALL scoreboards</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># LuckPerms example - grants access to every scoreboard</span>
+<span class="l l-Scalar l-Scalar-Plain">/lp group default permission set shyscoreboard.scoreboard.* true</span>
+</code></pre></div>
+<p><strong>⚠️ Important:</strong> This permission allows access to <strong>every</strong> scoreboard on your server. Use with caution!</p>
+<h3 id="specific-scoreboard-permission-shyscoreboardscoreboardname">Specific Scoreboard Permission: <code>shyscoreboard.scoreboard.&lt;name&gt;</code></h3>
+<p><strong>Use case:</strong> Give players access to specific scoreboards only</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Examples for different scoreboard names</span>
+<span class="l l-Scalar l-Scalar-Plain">shyscoreboard.scoreboard.lobby_board</span><span class="w">      </span><span class="c1"># Access to lobby_board scoreboard</span>
+<span class="l l-Scalar l-Scalar-Plain">shyscoreboard.scoreboard.vip_lounge</span><span class="w">       </span><span class="c1"># Access to vip_lounge scoreboard  </span>
+<span class="l l-Scalar l-Scalar-Plain">shyscoreboard.scoreboard.pvp_arena</span><span class="w">        </span><span class="c1"># Access to pvp_arena scoreboard</span>
+<span class="l l-Scalar l-Scalar-Plain">shyscoreboard.scoreboard.admin_panel</span><span class="w">      </span><span class="c1"># Access to admin_panel scoreboard</span>
+</code></pre></div>
+<p><strong>💡 Pro Tip:</strong> The <code>&lt;name&gt;</code> must exactly match the <code>name:</code> field in your scoreboard YAML file.</p>
 
 
 
