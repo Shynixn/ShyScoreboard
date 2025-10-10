@@ -765,13 +765,13 @@
 <div class="highlight"><pre><span></span><code>/shyscoreboard add &lt;scoreboard&gt; [player]
 </code></pre></div>
 <p><strong>Parameters:</strong>
-- <code>&lt;scoreboard&gt;</code> - The name of the scoreboard to add (required)
-- <code>[player]</code> - Target player name (optional, defaults to command sender)</p>
+* <code>&lt;scoreboard&gt;</code> - The name of the scoreboard to add (required)
+* <code>[player]</code> - Target player name (optional, defaults to command sender)</p>
 <p><strong>Behavior:</strong>
-- ✅ <strong>Works with:</strong> COMMAND-type scoreboards only
-- ❌ <strong>Ignored for:</strong> GLOBAL and WORLDGUARD types
-- 🔄 <strong>Priority:</strong> If multiple scoreboards are added, highest priority (lowest number) is displayed
-- 🔒 <strong>Requires:</strong> Player must have <code>shyscoreboard.scoreboard.&lt;scoreboard&gt;</code> permission</p>
+* ✅ <strong>Works with:</strong> COMMAND-type scoreboards only
+* ❌ <strong>Ignored for:</strong> GLOBAL and WORLDGUARD types
+* 🔄 <strong>Priority:</strong> If multiple scoreboards are added, highest priority (lowest number) is displayed
+* 🔒 <strong>Requires:</strong> Player must have <code>shyscoreboard.scoreboard.&lt;scoreboard&gt;</code> permission</p>
 <p><strong>Examples:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Add lobby scoreboard to yourself</span>
 /shyscoreboard<span class="w"> </span>add<span class="w"> </span>lobby_scoreboard
@@ -783,22 +783,22 @@
 /shyscoreboard<span class="w"> </span>add<span class="w"> </span>vip_board
 </code></pre></div></p>
 <p><strong>Common Use Cases:</strong>
-- Minigame plugin integration (add game scoreboard when joining)
-- Region-based displays (add via world management plugins)
-- Temporary status displays (events, competitions)</p>
+* Minigame plugin integration (add game scoreboard when joining)
+* Region-based displays (add via world management plugins)
+* Temporary status displays (events, competitions)</p>
 <hr />
 <h3 id="shyscoreboard-remove"><code>/shyscoreboard remove</code></h3>
 <p><strong>Purpose:</strong> Remove a COMMAND-type scoreboard from a player's display list</p>
 <div class="highlight"><pre><span></span><code>/shyscoreboard remove &lt;scoreboard&gt; [player]
 </code></pre></div>
 <p><strong>Parameters:</strong>
-- <code>&lt;scoreboard&gt;</code> - The name of the scoreboard to remove (required)
-- <code>[player]</code> - Target player name (optional, defaults to command sender)</p>
+* <code>&lt;scoreboard&gt;</code> - The name of the scoreboard to remove (required)
+* <code>[player]</code> - Target player name (optional, defaults to command sender)</p>
 <p><strong>Behavior:</strong>
-- ✅ <strong>Works with:</strong> COMMAND-type scoreboards only
-- ❌ <strong>Ignored for:</strong> GLOBAL and WORLDGUARD types
-- 🔄 <strong>Priority:</strong> After removal, next highest priority scoreboard is displayed
-- 🔒 <strong>Requires:</strong> <code>shyscoreboard.remove</code> permission (not scoreboard permission)</p>
+* ✅ <strong>Works with:</strong> COMMAND-type scoreboards only
+* ❌ <strong>Ignored for:</strong> GLOBAL and WORLDGUARD types
+* 🔄 <strong>Priority:</strong> After removal, next highest priority scoreboard is displayed
+* 🔒 <strong>Requires:</strong> <code>shyscoreboard.remove</code> permission (not scoreboard permission)</p>
 <p><strong>Examples:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Remove lobby scoreboard from yourself</span>
 /shyscoreboard<span class="w"> </span>remove<span class="w"> </span>lobby_scoreboard
@@ -810,22 +810,22 @@
 /shyscoreboard<span class="w"> </span>remove<span class="w"> </span>summer_event
 </code></pre></div></p>
 <p><strong>Common Use Cases:</strong>
-- Minigame plugin integration (remove when leaving game)
-- Region exit handling (remove region-specific scoreboards)
-- Event cleanup (remove temporary displays)</p>
+* Minigame plugin integration (remove when leaving game)
+* Region exit handling (remove region-specific scoreboards)
+* Event cleanup (remove temporary displays)</p>
 <hr />
 <h3 id="shyscoreboard-set"><code>/shyscoreboard set</code></h3>
 <p><strong>Purpose:</strong> Replace all active COMMAND scoreboards with a single specific scoreboard</p>
 <div class="highlight"><pre><span></span><code>/shyscoreboard set &lt;scoreboard&gt; [player]
 </code></pre></div>
 <p><strong>Parameters:</strong>
-- <code>&lt;scoreboard&gt;</code> - The name of the scoreboard to set (required)
-- <code>[player]</code> - Target player name (optional, defaults to command sender)</p>
+* <code>&lt;scoreboard&gt;</code> - The name of the scoreboard to set (required)
+* <code>[player]</code> - Target player name (optional, defaults to command sender)</p>
 <p><strong>Behavior:</strong>
-- 🧹 <strong>Clears:</strong> All existing COMMAND-type scoreboards
-- ➕ <strong>Adds:</strong> The specified scoreboard as the only COMMAND scoreboard
-- ✅ <strong>Works with:</strong> COMMAND-type scoreboards only
-- 🔒 <strong>Requires:</strong> Player must have <code>shyscoreboard.scoreboard.&lt;scoreboard&gt;</code> permission</p>
+* 🧹 <strong>Clears:</strong> All existing COMMAND-type scoreboards
+* ➕ <strong>Adds:</strong> The specified scoreboard as the only COMMAND scoreboard
+* ✅ <strong>Works with:</strong> COMMAND-type scoreboards only
+* 🔒 <strong>Requires:</strong> Player must have <code>shyscoreboard.scoreboard.&lt;scoreboard&gt;</code> permission</p>
 <p><strong>Examples:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Set only the lobby scoreboard (removes all others)</span>
 /shyscoreboard<span class="w"> </span><span class="nb">set</span><span class="w"> </span>lobby_scoreboard
@@ -837,21 +837,21 @@
 /shyscoreboard<span class="w"> </span><span class="nb">set</span><span class="w"> </span>halloween_event
 </code></pre></div></p>
 <p><strong>Common Use Cases:</strong>
-- Clean state switching (ensure only one scoreboard is shown)
-- Admin panel display (override all other scoreboards)
-- Event mode activation (clear normal displays, show event board)</p>
+* Clean state switching (ensure only one scoreboard is shown)
+* Admin panel display (override all other scoreboards)
+* Event mode activation (clear normal displays, show event board)</p>
 <hr />
 <h3 id="shyscoreboard-update"><code>/shyscoreboard update</code></h3>
 <p><strong>Purpose:</strong> Refresh a player's scoreboard display and fix display issues</p>
 <div class="highlight"><pre><span></span><code>/shyscoreboard update [respawn] [player]
 </code></pre></div>
 <p><strong>Parameters:</strong>
-- <code>[respawn]</code> - Force a complete scoreboard respawn (optional)
-- <code>[player]</code> - Target player name (optional, defaults to command sender)</p>
+* <code>[respawn]</code> - Force a complete scoreboard respawn (optional)
+* <code>[player]</code> - Target player name (optional, defaults to command sender)</p>
 <p><strong>Behavior:</strong>
-- 🔄 <strong>Refreshes:</strong> Recalculates which scoreboard should be displayed
-- 🛠️ <strong>Fixes:</strong> Issues caused by other plugins overriding scoreboards
-- 💾 <strong>Respawn mode:</strong> Completely recreates the scoreboard display</p>
+* 🔄 <strong>Refreshes:</strong> Recalculates which scoreboard should be displayed
+* 🛠️ <strong>Fixes:</strong> Issues caused by other plugins overriding scoreboards
+* 💾 <strong>Respawn mode:</strong> Completely recreates the scoreboard display</p>
 <p><strong>Examples:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Refresh your own scoreboard</span>
 /shyscoreboard<span class="w"> </span>update
@@ -866,10 +866,10 @@
 /shyscoreboard<span class="w"> </span>update<span class="w"> </span>respawn<span class="w"> </span>Alex
 </code></pre></div></p>
 <p><strong>Common Use Cases:</strong>
-- Troubleshooting display issues
-- After other plugins modify scoreboards
-- Permission changes not reflecting immediately
-- Player reports "blank" or "wrong" scoreboard</p>
+* Troubleshooting display issues
+* After other plugins modify scoreboards
+* Permission changes not reflecting immediately
+* Player reports "blank" or "wrong" scoreboard</p>
 <hr />
 <h3 id="shyscoreboard-reload"><code>/shyscoreboard reload</code></h3>
 <p><strong>Purpose:</strong> Reload all plugin configurations and scoreboard files</p>
@@ -877,22 +877,22 @@
 </code></pre></div>
 <p><strong>Parameters:</strong> None</p>
 <p><strong>Behavior:</strong>
-- 📁 <strong>Reloads:</strong> All <code>.yml</code> files in the scoreboard folder
-- 🔄 <strong>Refreshes:</strong> All player scoreboards with new configurations
-- ⚡ <strong>Updates:</strong> Settings take effect immediately</p>
+* 📁 <strong>Reloads:</strong> All <code>.yml</code> files in the scoreboard folder
+* 🔄 <strong>Refreshes:</strong> All player scoreboards with new configurations
+* ⚡ <strong>Updates:</strong> Settings take effect immediately</p>
 <p><strong>Examples:</strong>
 <div class="highlight"><pre><span></span><code><span class="c1"># Reload after editing scoreboard files</span>
 /shyscoreboard<span class="w"> </span>reload
 </code></pre></div></p>
 <p><strong>Common Use Cases:</strong>
-- After editing scoreboard configuration files
-- Adding new scoreboards without server restart
-- Modifying existing scoreboard content
-- Testing configuration changes</p>
+* After editing scoreboard configuration files
+* Adding new scoreboards without server restart
+* Modifying existing scoreboard content
+* Testing configuration changes</p>
 <p><strong>⚠️ Important Notes:</strong>
-- Always run this command after editing <code>.yml</code> files
-- Players will see updated scoreboards immediately
-- Invalid configurations will show error messages</p>
+* Always run this command after editing <code>.yml</code> files
+* Players will see updated scoreboards immediately
+* Invalid configurations will show error messages</p>
 <hr />
 <h2 id="usage-tips">💡 Usage Tips</h2>
 <h3 id="command-integration">Command Integration</h3>
@@ -918,9 +918,9 @@
 </code></pre></div></p>
 <h3 id="priority-management">Priority Management</h3>
 <p>When using multiple COMMAND scoreboards:
-- Lower priority numbers = higher display priority
-- Priority 1 will override priority 5
-- Use priority gaps (1, 5, 10) to allow future additions</p>
+* Lower priority numbers = higher display priority
+* Priority 1 will override priority 5
+* Use priority gaps (1, 5, 10) to allow future additions</p>
 <h3 id="troubleshooting-commands">Troubleshooting Commands</h3>
 <p>If players report scoreboard issues:
 1. <code>/shyscoreboard update respawn [player]</code> - Force refresh

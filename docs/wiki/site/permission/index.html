@@ -387,39 +387,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#understanding-scoreboard-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      🎯 Understanding Scoreboard Permissions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🎯 Understanding Scoreboard Permissions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#wildcard-permission-shyscoreboardscoreboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Wildcard Permission: shyscoreboard.scoreboard.*
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#specific-scoreboard-permission-shyscoreboardscoreboardname" class="md-nav__link">
-    <span class="md-ellipsis">
-      Specific Scoreboard Permission: shyscoreboard.scoreboard.&lt;name&gt;
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -526,39 +493,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#understanding-scoreboard-permissions" class="md-nav__link">
-    <span class="md-ellipsis">
-      🎯 Understanding Scoreboard Permissions
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="🎯 Understanding Scoreboard Permissions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#wildcard-permission-shyscoreboardscoreboard" class="md-nav__link">
-    <span class="md-ellipsis">
-      Wildcard Permission: shyscoreboard.scoreboard.*
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#specific-scoreboard-permission-shyscoreboardscoreboardname" class="md-nav__link">
-    <span class="md-ellipsis">
-      Specific Scoreboard Permission: shyscoreboard.scoreboard.&lt;name&gt;
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -648,23 +582,6 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="understanding-scoreboard-permissions">🎯 Understanding Scoreboard Permissions</h2>
-<h3 id="wildcard-permission-shyscoreboardscoreboard">Wildcard Permission: <code>shyscoreboard.scoreboard.*</code></h3>
-<p><strong>Use case:</strong> Give players access to ALL scoreboards</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># LuckPerms example - grants access to every scoreboard</span>
-<span class="l l-Scalar l-Scalar-Plain">/lp group default permission set shyscoreboard.scoreboard.* true</span>
-</code></pre></div>
-<p><strong>⚠️ Important:</strong> This permission allows access to <strong>every</strong> scoreboard on your server. Use with caution!</p>
-<h3 id="specific-scoreboard-permission-shyscoreboardscoreboardname">Specific Scoreboard Permission: <code>shyscoreboard.scoreboard.&lt;name&gt;</code></h3>
-<p><strong>Use case:</strong> Give players access to specific scoreboards only</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Examples for different scoreboard names</span>
-<span class="l l-Scalar l-Scalar-Plain">shyscoreboard.scoreboard.lobby_board</span><span class="w">      </span><span class="c1"># Access to lobby_board scoreboard</span>
-<span class="l l-Scalar l-Scalar-Plain">shyscoreboard.scoreboard.vip_lounge</span><span class="w">       </span><span class="c1"># Access to vip_lounge scoreboard  </span>
-<span class="l l-Scalar l-Scalar-Plain">shyscoreboard.scoreboard.pvp_arena</span><span class="w">        </span><span class="c1"># Access to pvp_arena scoreboard</span>
-<span class="l l-Scalar l-Scalar-Plain">shyscoreboard.scoreboard.admin_panel</span><span class="w">      </span><span class="c1"># Access to admin_panel scoreboard</span>
-</code></pre></div>
-<p><strong>💡 Pro Tip:</strong> The <code>&lt;name&gt;</code> must exactly match the <code>name:</code> field in your scoreboard YAML file.</p>
 
 
 
