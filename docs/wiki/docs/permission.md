@@ -6,8 +6,8 @@ This guide explains all permission nodes available in ShyScoreboard and how to p
 
 ShyScoreboard uses two permission levels:
 
-- **👤 User Level**: Permissions that regular players can have
-- **🛡️ Admin Level**: Permissions that should only be given to trusted staff
+* **👤 User Level**: Permissions that regular players can have
+* **🛡️ Admin Level**: Permissions that should only be given to trusted staff
 
 ---
 
@@ -24,29 +24,3 @@ ShyScoreboard uses two permission levels:
 | `shyscoreboard.remove` | 🛡️ Admin | Remove scoreboards from players | `/shyscoreboard remove` |
 | `shyscoreboard.update` | 🛡️ Admin | Refresh player scoreboards | `/shyscoreboard update` |
 
----
-
-## 🎯 Understanding Scoreboard Permissions
-
-### Wildcard Permission: `shyscoreboard.scoreboard.*`
-**Use case:** Give players access to ALL scoreboards
-
-```yaml
-# LuckPerms example - grants access to every scoreboard
-/lp group default permission set shyscoreboard.scoreboard.* true
-```
-
-**⚠️ Important:** This permission allows access to **every** scoreboard on your server. Use with caution!
-
-### Specific Scoreboard Permission: `shyscoreboard.scoreboard.<name>`
-**Use case:** Give players access to specific scoreboards only
-
-```yaml
-# Examples for different scoreboard names
-shyscoreboard.scoreboard.lobby_board      # Access to lobby_board scoreboard
-shyscoreboard.scoreboard.vip_lounge       # Access to vip_lounge scoreboard  
-shyscoreboard.scoreboard.pvp_arena        # Access to pvp_arena scoreboard
-shyscoreboard.scoreboard.admin_panel      # Access to admin_panel scoreboard
-```
-
-**💡 Pro Tip:** The `<name>` must exactly match the `name:` field in your scoreboard YAML file.
