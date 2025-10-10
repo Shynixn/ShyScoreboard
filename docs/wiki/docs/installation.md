@@ -12,6 +12,7 @@ ShyScoreboard offers three display modes, each designed for different server set
 Global scoreboards are **always visible** to players who have the required permission. They automatically appear when a player joins and update when permissions change.
 
 **✅ Use GLOBAL when:**
+
 * You have well-defined permission groups (Admin, VIP, Member, etc.)
 * You use permission plugins like LuckPerms
 * You want scoreboards to automatically show based on player roles
@@ -24,6 +25,7 @@ Global scoreboards are **always visible** to players who have the required permi
 Command scoreboards only appear after being manually added via commands. This gives you full control over when and where scoreboards are displayed.
 
 **✅ Use COMMAND when:**
+
 * You have OP players who need flexible scoreboard control
 * You want to show different scoreboards in different worlds/regions
 * You're integrating with world management or minigame plugins
@@ -36,6 +38,7 @@ Command scoreboards only appear after being manually added via commands. This gi
 WorldGuard scoreboards automatically appear when players enter regions with the appropriate flag. This integrates seamlessly with your existing region setup.
 
 **✅ Use WORLDGUARD when:**
+
 * You're already using WorldGuard for region management
 * You want scoreboards tied to specific areas
 * You need support for overlapping regions
@@ -151,21 +154,25 @@ The activation method depends on your chosen scoreboard type:
 ## 🎨 Customization Tips
 
 ### Color Codes
+
 * Use `&` for traditional color codes (`&a` = green, `&c` = red)
 * Use `&#RRGGBB` for hex colors (1.16+)
 * Mix colors within lines for creative effects
 
 ### PlaceholderAPI Integration
+
 * Install PlaceholderAPI for dynamic content
 * Use placeholders like `%player_name%`, `%server_online%`
 * Browse available placeholders with `/papi list`
 
 ### Line Length Optimization
+
 * Maximum 32 characters per line (including color codes)
 * Color codes count toward the limit
 * Test your lines in-game to ensure they display correctly
 
 ### Performance Tuning
+
 * Higher `refreshTicks` = better performance
 * Lower `refreshTicks` = more responsive updates
 * Start with 60 ticks (3 seconds) and adjust as needed
@@ -175,16 +182,19 @@ The activation method depends on your chosen scoreboard type:
 ## ❓ Common Issues
 
 **Q: My scoreboard isn't showing**
+
 * Check that the player has the required permission
 * Verify the scoreboard type matches your setup method
 * Ensure you ran `/shyscoreboard reload` after changes
 
 **Q: Colors aren't working**
+
 * Make sure you're using `&` for color codes
 * Check that your line length doesn't exceed 32 characters
 * Verify PlaceholderAPI is installed for placeholder support
 
 **Q: Multiple scoreboards are conflicting**
+
 * Check the `priority` values (lower numbers = higher priority)
 * Ensure different scoreboards have different names
 * Use `/shyscoreboard update` to refresh player scoreboards

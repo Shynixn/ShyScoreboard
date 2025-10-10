@@ -33,10 +33,12 @@ To see all available commands in-game, use:
 ```
 
 **Parameters:**
+
 * `<scoreboard>` - The name of the scoreboard to add (required)
 * `[player]` - Target player name (optional, defaults to command sender)
 
 **Behavior:**
+
 * ✅ **Works with:** COMMAND-type scoreboards only
 * ❌ **Ignored for:** GLOBAL and WORLDGUARD types
 * 🔄 **Priority:** If multiple scoreboards are added, highest priority (lowest number) is displayed
@@ -55,6 +57,7 @@ To see all available commands in-game, use:
 ```
 
 **Common Use Cases:**
+
 * Minigame plugin integration (add game scoreboard when joining)
 * Region-based displays (add via world management plugins)
 * Temporary status displays (events, competitions)
@@ -69,10 +72,12 @@ To see all available commands in-game, use:
 ```
 
 **Parameters:**
+
 * `<scoreboard>` - The name of the scoreboard to remove (required)
 * `[player]` - Target player name (optional, defaults to command sender)
 
 **Behavior:**
+
 * ✅ **Works with:** COMMAND-type scoreboards only
 * ❌ **Ignored for:** GLOBAL and WORLDGUARD types
 * 🔄 **Priority:** After removal, next highest priority scoreboard is displayed
@@ -91,6 +96,7 @@ To see all available commands in-game, use:
 ```
 
 **Common Use Cases:**
+
 * Minigame plugin integration (remove when leaving game)
 * Region exit handling (remove region-specific scoreboards)
 * Event cleanup (remove temporary displays)
@@ -105,10 +111,12 @@ To see all available commands in-game, use:
 ```
 
 **Parameters:**
+
 * `<scoreboard>` - The name of the scoreboard to set (required)
 * `[player]` - Target player name (optional, defaults to command sender)
 
 **Behavior:**
+
 * 🧹 **Clears:** All existing COMMAND-type scoreboards
 * ➕ **Adds:** The specified scoreboard as the only COMMAND scoreboard
 * ✅ **Works with:** COMMAND-type scoreboards only
@@ -127,6 +135,7 @@ To see all available commands in-game, use:
 ```
 
 **Common Use Cases:**
+
 * Clean state switching (ensure only one scoreboard is shown)
 * Admin panel display (override all other scoreboards)
 * Event mode activation (clear normal displays, show event board)
@@ -141,10 +150,12 @@ To see all available commands in-game, use:
 ```
 
 **Parameters:**
+
 * `[respawn]` - Force a complete scoreboard respawn (optional)
 * `[player]` - Target player name (optional, defaults to command sender)
 
 **Behavior:**
+
 * 🔄 **Refreshes:** Recalculates which scoreboard should be displayed
 * 🛠️ **Fixes:** Issues caused by other plugins overriding scoreboards
 * 💾 **Respawn mode:** Completely recreates the scoreboard display
@@ -165,6 +176,7 @@ To see all available commands in-game, use:
 ```
 
 **Common Use Cases:**
+
 * Troubleshooting display issues
 * After other plugins modify scoreboards
 * Permission changes not reflecting immediately
@@ -182,6 +194,7 @@ To see all available commands in-game, use:
 **Parameters:** None
 
 **Behavior:**
+
 * 📁 **Reloads:** All `.yml` files in the scoreboard folder
 * 🔄 **Refreshes:** All player scoreboards with new configurations
 * ⚡ **Updates:** Settings take effect immediately
@@ -193,12 +206,14 @@ To see all available commands in-game, use:
 ```
 
 **Common Use Cases:**
+
 * After editing scoreboard configuration files
 * Adding new scoreboards without server restart
 * Modifying existing scoreboard content
 * Testing configuration changes
 
 **⚠️ Important Notes:**
+
 * Always run this command after editing `.yml` files
 * Players will see updated scoreboards immediately
 * Invalid configurations will show error messages
@@ -237,6 +252,7 @@ Many server administrators integrate these commands with other plugins:
 
 ### Priority Management
 When using multiple COMMAND scoreboards:
+
 * Lower priority numbers = higher display priority
 * Priority 1 will override priority 5
 * Use priority gaps (1, 5, 10) to allow future additions
