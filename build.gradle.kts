@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.9.0"
+version = "1.10.0"
 
 repositories {
     mavenCentral()
@@ -27,9 +27,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.44")
-    implementation("com.github.shynixn.mcutils:packet:2025.37")
-    implementation("com.github.shynixn.mcutils:worldguard:2025.4")
+    implementation("com.github.shynixn.mcutils:common:2025.47")
+    implementation("com.github.shynixn.mcutils:packet:2025.42")
+    implementation("com.github.shynixn.mcutils:worldguard:2025.5")
 
     // Test
     testImplementation(kotlin("test"))

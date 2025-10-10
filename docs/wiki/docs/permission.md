@@ -1,19 +1,52 @@
-# Permission
+# Permissions Guide
 
-The following permissions are available in ShyScoreboard.
+This guide explains all permission nodes available in ShyScoreboard and how to properly configure them for your server. Understanding permissions is crucial for controlling who can see which scoreboards and who can manage them.
 
-#### Levels
+## 🔐 Permission Levels
 
-* User: A permission all players can have.
-* Admin: A permission only admins should have.
+ShyScoreboard uses two permission levels:
 
-| Permission                                   | Level | Description                                 |   
-|----------------------------------------------|-------|---------------------------------------------|
-| shyscoreboard.scoreboard.*                   | User  | Allows to see all scoreboards               |
-| shyscoreboard.scoreboard.\[scoreboard-name\] | User  | Allows to see a specific scoreboard         |
-| shyscoreboard.command                        | Admin | Allows to use the /shyscoreboard command.   |
-| shyscoreboard.reload                         | Admin | Allows to reload configurations.            |
-| shyscoreboard.add                            | Admin | Allows to add a scoreboard to a player      |
-| shyscoreboard.set                            | Admin | Allows to set a scoreboard to a player      |
-| shyscoreboard.remove                         | Admin | Allows to remove a scoreboard from a player |
-| shyscoreboard.update                         | Admin | Allows to refresh a scoreboard              |
+- **👤 User Level**: Permissions that regular players can have
+- **🛡️ Admin Level**: Permissions that should only be given to trusted staff
+
+---
+
+## 📋 Complete Permission Reference
+
+| Permission | Level | Description | Required For |
+|------------|-------|-------------|--------------|
+| `shyscoreboard.scoreboard.*` | 👤 User | Access to **all** scoreboards | Seeing any scoreboard |
+| `shyscoreboard.scoreboard.<name>` | 👤 User | Access to a **specific** scoreboard | Seeing named scoreboard |
+| `shyscoreboard.command` | 🛡️ Admin | Use the base `/shyscoreboard` command | Running any command |
+| `shyscoreboard.reload` | 🛡️ Admin | Reload plugin configurations | `/shyscoreboard reload` |
+| `shyscoreboard.add` | 🛡️ Admin | Add scoreboards to players | `/shyscoreboard add` |
+| `shyscoreboard.set` | 🛡️ Admin | Set specific scoreboard for players | `/shyscoreboard set` |
+| `shyscoreboard.remove` | 🛡️ Admin | Remove scoreboards from players | `/shyscoreboard remove` |
+| `shyscoreboard.update` | 🛡️ Admin | Refresh player scoreboards | `/shyscoreboard update` |
+
+---
+
+## 🎯 Understanding Scoreboard Permissions
+
+### Wildcard Permission: `shyscoreboard.scoreboard.*`
+**Use case:** Give players access to ALL scoreboards
+
+```yaml
+# LuckPerms example - grants access to every scoreboard
+/lp group default permission set shyscoreboard.scoreboard.* true
+```
+
+**⚠️ Important:** This permission allows access to **every** scoreboard on your server. Use with caution!
+
+### Specific Scoreboard Permission: `shyscoreboard.scoreboard.<name>`
+**Use case:** Give players access to specific scoreboards only
+
+```yaml
+# Examples for different scoreboard names
+shyscoreboard.scoreboard.lobby_board      # Access to lobby_board scoreboard
+shyscoreboard.scoreboard.vip_lounge       # Access to vip_lounge scoreboard  
+shyscoreboard.scoreboard.pvp_arena        # Access to pvp_arena scoreboard
+shyscoreboard.scoreboard.admin_panel      # Access to admin_panel scoreboard
+```
+
+**💡 Pro Tip:** The `<name>` must exactly match the `name:` field in your scoreboard YAML file.

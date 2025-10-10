@@ -1,56 +1,190 @@
-# How to create a new scoreboard
+# Configuration Guide
 
-## Understanding scoreboard types
+This guide will walk you through creating and configuring scoreboards in ShyScoreboard. By the end, you'll understand the different scoreboard types and how to set them up for your server.
 
-ShyScoreboard comes with 3 types of scoreboards ``GLOBAL``, ``COMMAND`` and ``WORLDGUARD``. All types can be set in the file of the individual scoreboard.
+## 📋 Understanding Scoreboard Types
 
-#### GLOBAL
+ShyScoreboard offers three display modes, each designed for different server setups:
 
-A global scoreboard is always visible as long as a player has got the permission to that scoreboard. For example, if you have got a scoreboard 
-named ``sample_scoreboard`` it will always be displayed if a player has got the permission ``shyscoreboard.scoreboard.sample_scoreboard``.
+### 🌍 GLOBAL Scoreboards
+**Best for: Servers with organized permission groups**
 
-Global scoreboards should be used if you **do not have** ``OP PLAYERS`` and have got correctly setup roles with a permission plugin like ``LuckPerms``. 
-e.g. you have got admin roles, user roles, etc. Now, if a player enters minigames or enters regions on your server, then he should be added to different permissions roles like ``blockball`` or ``skyblock`` etc. 
-Global scoreboards automatically detect permission changes and display the correct scoreboard.
+Global scoreboards are **always visible** to players who have the required permission. They automatically appear when a player joins and update when permissions change.
 
-#### COMMAND
+**✅ Use GLOBAL when:**
+- You have well-defined permission groups (Admin, VIP, Member, etc.)
+- You use permission plugins like LuckPerms
+- You want scoreboards to automatically show based on player roles
 
-A command scoreboard is only visible after being added via the command ``/shyscoreboard add <scoreboard> [player]`` to a player. This ensures a scoreboard is not always visible, which works
-best for servers having ``OP Players``. Add this command to worlds or regions on your server managed by your world or region plugins. This allows to 
-display different scoreboards when a player enters different worlds, regions or minigames.
+**Example Permission:** `shyscoreboard.scoreboard.sample_scoreboard`
 
-#### WORLDGUARD 
+### ⚡ COMMAND Scoreboards  
+**Best for: Servers with OP players or dynamic regions**
 
-A worldguard scoreboard is only visible after a flag with the name of the scoreboard has been added to an existing WorldGuard region. This is the recommended type
-of scoreboard if you are already using WorldGuard on your server. This type also works with overlapping regions and is compatible to WorldGuard 7 and 6.
+Command scoreboards only appear after being manually added via commands. This gives you full control over when and where scoreboards are displayed.
 
-## Creating a scoreboard
+**✅ Use COMMAND when:**
+- You have OP players who need flexible scoreboard control
+- You want to show different scoreboards in different worlds/regions
+- You're integrating with world management or minigame plugins
 
-### Managing files
+**Required:** Permission + `/shyscoreboard add <scoreboard>` command
 
-1. Open the ``/plugins/ShyScoreboard/scoreboard`` folder.
-2. Open the ``sample_scoreboard.yml`` file.
-3. Set type from ``GLOBAL`` to ``COMMAND``. This disables the sample scoreboard.
-4. Copy the ``sample_scoreboard.yml`` to a new file in the same folder and name it ``my_scoreboard.yml``.
-5. Open ``my_scoreboard.yml`` and set the name to ``my_scoreboard.``
-6. Decide if you want to go with a ``GLOBAL`` or ``COMMAND`` scoreboard and set the type.
-7. Set the title to your wanted title. The title is limited by 16 characters.
-8. Add or remove lines as you want. Lines can only be 32 character long. Chat Colors and HTML color codes count as well.
+### 🛡️ WORLDGUARD Scoreboards
+**Best for: Servers already using WorldGuard**
 
-### InGame
+WorldGuard scoreboards automatically appear when players enter regions with the appropriate flag. This integrates seamlessly with your existing region setup.
 
-* Execute the ``/shyscoreboard reload`` command.
+**✅ Use WORLDGUARD when:**
+- You're already using WorldGuard for region management
+- You want scoreboards tied to specific areas
+- You need support for overlapping regions
 
-#### GLOBAL
+**Required:** Permission + WorldGuard region flag
 
-* If you have selected ``GLOBAL``, the scoreboard will be visible after you have obtained the ``shyscoreboard.scoreboard.my_scoreboard`` permission.
+---
 
-#### COMMAND
+## 🔧 Creating Your First Scoreboard
 
-* If you have selected ``COMMAND``, the scoreboard will be visible after you have obtained the ``shyscoreboard.scoreboard.my_scoreboard`` permission and executed the command ``/shyscoreboard add <scoreboard>``. 
-* You need to add the ``/shyscoreboard add <scoreboard>`` command and the ``/shyscoreboard remove <scoreboard>`` command to all worlds and regions managed by your world and region plugins to display the correct scoreboard in the correct region.
+### Step 1: Prepare the Configuration
 
-#### WORLDGUARD
+1. **Navigate to the scoreboard folder:**
+   ```
+   /plugins/ShyScoreboard/scoreboard/
+   ```
 
-* If you have selected ``WORLDGUARD``, the scoreboard will be visible after you have obtained the ``shyscoreboard.scoreboard.my_scoreboard`` permission and entered a WorldGuard region with a flag ``shyscoreboard`` set to ``my_scoreboard``.
-* You can add this flag via the WorldGuard command ``/region flag <region> shyscoreboard <scoreboard>``
+2. **Disable the sample scoreboard:**
+   - Open `sample_scoreboard.yml`
+   - Change `type: "GLOBAL"` to `type: "COMMAND"`
+   - This prevents the sample from interfering with your setup
+
+3. **Create your scoreboard file:**
+   - Copy `sample_scoreboard.yml` and rename it (e.g., `lobby_scoreboard.yml`)
+   - The filename should match your scoreboard's purpose
+
+### Step 2: Configure Your Scoreboard
+
+Open your new scoreboard file and configure these key settings:
+
+```yaml
+# Must match your filename (without .yml)
+name: "lobby_scoreboard"
+
+# Choose your display type
+type: "GLOBAL"  # or "COMMAND" or "WORLDGUARD"
+
+# Lower numbers = higher priority
+priority: 1
+
+# How often to update (60 ticks = 3 seconds)
+refreshTicks: 60
+
+# Display title (max 16 characters)
+title: "&b&lMy Server"
+
+# Scoreboard lines (max 32 characters each)
+lines:
+  - "&7Welcome, %player_name%!"
+  - "&eOnline: %server_online%"
+  - "&6Rank: %vault_rank%"
+  - ""
+  - "&awww.myserver.com"
+```
+
+### Step 3: Apply Your Configuration
+
+Run the reload command in-game:
+```
+/shyscoreboard reload
+```
+
+---
+
+## 🎮 Activating Your Scoreboard
+
+The activation method depends on your chosen scoreboard type:
+
+### For GLOBAL Scoreboards
+
+1. **Grant the permission:**
+   ```
+   shyscoreboard.scoreboard.lobby_scoreboard
+   ```
+
+2. **That's it!** The scoreboard will automatically appear for players with this permission.
+
+### For COMMAND Scoreboards
+
+1. **Grant the permission:**
+   ```
+   shyscoreboard.scoreboard.lobby_scoreboard
+   ```
+
+2. **Add the scoreboard to players:**
+   ```
+   /shyscoreboard add lobby_scoreboard
+   ```
+
+3. **Remove when needed:**
+   ```
+   /shyscoreboard remove lobby_scoreboard
+   ```
+
+**💡 Pro Tip:** Add these commands to your world management or minigame plugins for automatic region-based display.
+
+### For WORLDGUARD Scoreboards
+
+1. **Grant the permission:**
+   ```
+   shyscoreboard.scoreboard.lobby_scoreboard
+   ```
+
+2. **Set the region flag:**
+   ```
+   /region flag spawn shyscoreboard lobby_scoreboard
+   ```
+
+3. **Players will see the scoreboard when entering the region!**
+
+---
+
+## 🎨 Customization Tips
+
+### Color Codes
+- Use `&` for traditional color codes (`&a` = green, `&c` = red)
+- Use `&#RRGGBB` for hex colors (1.16+)
+- Mix colors within lines for creative effects
+
+### PlaceholderAPI Integration
+- Install PlaceholderAPI for dynamic content
+- Use placeholders like `%player_name%`, `%server_online%`
+- Browse available placeholders with `/papi list`
+
+### Line Length Optimization
+- Maximum 32 characters per line (including color codes)
+- Color codes count toward the limit
+- Test your lines in-game to ensure they display correctly
+
+### Performance Tuning
+- Higher `refreshTicks` = better performance
+- Lower `refreshTicks` = more responsive updates
+- Start with 60 ticks (3 seconds) and adjust as needed
+
+---
+
+## ❓ Common Issues
+
+**Q: My scoreboard isn't showing**
+- Check that the player has the required permission
+- Verify the scoreboard type matches your setup method
+- Ensure you ran `/shyscoreboard reload` after changes
+
+**Q: Colors aren't working**
+- Make sure you're using `&` for color codes
+- Check that your line length doesn't exceed 32 characters
+- Verify PlaceholderAPI is installed for placeholder support
+
+**Q: Multiple scoreboards are conflicting**
+- Check the `priority` values (lower numbers = higher priority)
+- Ensure different scoreboards have different names
+- Use `/shyscoreboard update` to refresh player scoreboards
