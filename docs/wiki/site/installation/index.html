@@ -855,26 +855,32 @@
 <h3 id="global-scoreboards">🌍 GLOBAL Scoreboards</h3>
 <p><strong>Best for: Servers with organized permission groups</strong></p>
 <p>Global scoreboards are <strong>always visible</strong> to players who have the required permission. They automatically appear when a player joins and update when permissions change.</p>
-<p><strong>✅ Use GLOBAL when:</strong>
-* You have well-defined permission groups (Admin, VIP, Member, etc.)
-* You use permission plugins like LuckPerms
-* You want scoreboards to automatically show based on player roles</p>
+<p><strong>✅ Use GLOBAL when:</strong></p>
+<ul>
+<li>You have well-defined permission groups (Admin, VIP, Member, etc.)</li>
+<li>You use permission plugins like LuckPerms</li>
+<li>You want scoreboards to automatically show based on player roles</li>
+</ul>
 <p><strong>Example Permission:</strong> <code>shyscoreboard.scoreboard.sample_scoreboard</code></p>
 <h3 id="command-scoreboards">⚡ COMMAND Scoreboards</h3>
 <p><strong>Best for: Servers with OP players or dynamic regions</strong></p>
 <p>Command scoreboards only appear after being manually added via commands. This gives you full control over when and where scoreboards are displayed.</p>
-<p><strong>✅ Use COMMAND when:</strong>
-* You have OP players who need flexible scoreboard control
-* You want to show different scoreboards in different worlds/regions
-* You're integrating with world management or minigame plugins</p>
+<p><strong>✅ Use COMMAND when:</strong></p>
+<ul>
+<li>You have OP players who need flexible scoreboard control</li>
+<li>You want to show different scoreboards in different worlds/regions</li>
+<li>You're integrating with world management or minigame plugins</li>
+</ul>
 <p><strong>Required:</strong> Permission + <code>/shyscoreboard add &lt;scoreboard&gt;</code> command</p>
 <h3 id="worldguard-scoreboards">🛡️ WORLDGUARD Scoreboards</h3>
 <p><strong>Best for: Servers already using WorldGuard</strong></p>
 <p>WorldGuard scoreboards automatically appear when players enter regions with the appropriate flag. This integrates seamlessly with your existing region setup.</p>
-<p><strong>✅ Use WORLDGUARD when:</strong>
-* You're already using WorldGuard for region management
-* You want scoreboards tied to specific areas
-* You need support for overlapping regions</p>
+<p><strong>✅ Use WORLDGUARD when:</strong></p>
+<ul>
+<li>You're already using WorldGuard for region management</li>
+<li>You want scoreboards tied to specific areas</li>
+<li>You need support for overlapping regions</li>
+</ul>
 <p><strong>Required:</strong> Permission + WorldGuard region flag</p>
 <hr />
 <h2 id="creating-your-first-scoreboard">🔧 Creating Your First Scoreboard</h2>
@@ -1005,18 +1011,24 @@
 </ul>
 <hr />
 <h2 id="common-issues">❓ Common Issues</h2>
-<p><strong>Q: My scoreboard isn't showing</strong>
-* Check that the player has the required permission
-* Verify the scoreboard type matches your setup method
-* Ensure you ran <code>/shyscoreboard reload</code> after changes</p>
-<p><strong>Q: Colors aren't working</strong>
-* Make sure you're using <code>&amp;</code> for color codes
-* Check that your line length doesn't exceed 32 characters
-* Verify PlaceholderAPI is installed for placeholder support</p>
-<p><strong>Q: Multiple scoreboards are conflicting</strong>
-* Check the <code>priority</code> values (lower numbers = higher priority)
-* Ensure different scoreboards have different names
-* Use <code>/shyscoreboard update</code> to refresh player scoreboards</p>
+<p><strong>Q: My scoreboard isn't showing</strong></p>
+<ul>
+<li>Check that the player has the required permission</li>
+<li>Verify the scoreboard type matches your setup method</li>
+<li>Ensure you ran <code>/shyscoreboard reload</code> after changes</li>
+</ul>
+<p><strong>Q: Colors aren't working</strong></p>
+<ul>
+<li>Make sure you're using <code>&amp;</code> for color codes</li>
+<li>Check that your line length doesn't exceed 32 characters</li>
+<li>Verify PlaceholderAPI is installed for placeholder support</li>
+</ul>
+<p><strong>Q: Multiple scoreboards are conflicting</strong></p>
+<ul>
+<li>Check the <code>priority</code> values (lower numbers = higher priority)</li>
+<li>Ensure different scoreboards have different names</li>
+<li>Use <code>/shyscoreboard update</code> to refresh player scoreboards</li>
+</ul>
 
 
 
