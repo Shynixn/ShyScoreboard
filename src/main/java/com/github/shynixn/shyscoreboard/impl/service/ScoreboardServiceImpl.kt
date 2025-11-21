@@ -31,8 +31,8 @@ class ScoreboardServiceImpl(
     init {
         plugin.launch {
             while (!isDisposed) {
-                reloadActiveScoreboard()
                 delay(settings.checkForChangeChangeSeconds * 1000L)
+                reloadActiveScoreboard()
             }
         }
     }

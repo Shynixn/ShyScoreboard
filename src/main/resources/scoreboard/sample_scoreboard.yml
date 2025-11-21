@@ -9,9 +9,15 @@ type: "GLOBAL"
 priority: 5
 # The Minecraft ticks how often this scoreboard is updated to the player. (1 tick = 50ms)
 refreshTicks: 60
-# Displayed title of the scoreboard. Supports placeholders. Max length of the title is 16 characters.
+# Displayed title of the scoreboard.
+# Supports placeholders.
+# In modern Minecraft versions, unlimited characters are supported. In older Minecraft Versions only 32 or 16 characters are supported.
+# Support for HTML based color codes e.g. #F57F17, #FDD835
 title: "&aSample Scoreboard"
-# Displayed lines of the scoreboard. Supports placeholders. Max length of a line is 32 characters.
+# Displayed lines of the scoreboard.
+# Supports placeholders.
+# In modern Minecraft versions, unlimited characters are supported. In older Minecraft Versions only 32 or 16 characters are supported.
+# Support for HTML based color codes e.g. #F57F17, #FDD835
 lines:
   - "These are scoreboard"
   - "&elines, where you can enter"

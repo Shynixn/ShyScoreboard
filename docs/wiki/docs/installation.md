@@ -82,10 +82,10 @@ priority: 1
 # How often to update (60 ticks = 3 seconds)
 refreshTicks: 60
 
-# Display title (max 16 characters)
+# Display title (You can also use HTML color codes like #F57F17)
 title: "&b&lMy Server"
 
-# Scoreboard lines (max 32 characters each)
+# Scoreboard lines
 lines:
   - "&7Welcome, %player_name%!"
   - "&eOnline: %server_online%"
@@ -156,8 +156,7 @@ The activation method depends on your chosen scoreboard type:
 ### Color Codes
 
 * Use `&` for traditional color codes (`&a` = green, `&c` = red)
-* Use `&#RRGGBB` for hex colors (1.16+)
-* Mix colors within lines for creative effects
+* Use standard HTML color codes (`#F57F17`)
 
 ### PlaceholderAPI Integration
 
@@ -167,8 +166,6 @@ The activation method depends on your chosen scoreboard type:
 
 ### Line Length Optimization
 
-* Maximum 32 characters per line (including color codes)
-* Color codes count toward the limit
 * Test your lines in-game to ensure they display correctly
 
 ### Performance Tuning
@@ -187,10 +184,6 @@ The activation method depends on your chosen scoreboard type:
 * Verify the scoreboard type matches your setup method
 * Ensure you ran `/shyscoreboard reload` after changes
 
-**Q: Colors aren't working**
-
-* Make sure you're using `&` for color codes
-* Check that your line length doesn't exceed 32 characters
 * Verify PlaceholderAPI is installed for placeholder support
 
 **Q: Multiple scoreboards are conflicting**

@@ -9,8 +9,8 @@ ShyScoreboard is a modern, high-performance scoreboard plugin for Bukkit and Fol
 ### Core Features
 * **🚀 Performance Optimized**: Fully asynchronous processing with zero server lag
 * **📱 Non-Flickering Display**: Smooth scoreboard updates without visual glitches
-* **🎨 Rich Customization**: Support for color codes and PlaceholderAPI integration
-* **📏 Extended Lines**: Support for 32-character lines (double vanilla length)
+* **🎨 Rich Customization**: Support for HTML color codes and PlaceholderAPI integration
+* **📏 Extended Lines**: Support for unlimited character lines
 
 ### Display Modes
 * **🌍 Global Scoreboards**: Always visible with proper permissions
@@ -21,23 +21,6 @@ ShyScoreboard is a modern, high-performance scoreboard plugin for Bukkit and Fol
 * **📦 Server Support**: Bukkit and Folia compatible
 * **🔌 Plugin Integration**: PlaceholderAPI and WorldGuard support
 * **🎯 Version Range**: Supports Minecraft 1.8.R1 through 1.21.R6
-
-## 🚀 Quick Start
-
-### 1. Installation
-1. Download the latest ShyScoreboard plugin JAR
-2. Place it in your server's `plugins/` folder
-3. Restart your server
-
-### 2. Basic Setup
-1. Navigate to `/plugins/ShyScoreboard/scoreboard/`
-2. Edit `sample_scoreboard.yml` to configure your first scoreboard
-3. Run `/shyscoreboard reload` to apply changes
-
-### 3. Choose Your Display Mode
-* **For servers with permission groups**: Use `GLOBAL` type
-* **For servers with OP players**: Use `COMMAND` type  
-* **For servers with WorldGuard**: Use `WORLDGUARD` type
 
 ## 📚 Documentation
 
@@ -51,7 +34,3 @@ ShyScoreboard is a modern, high-performance scoreboard plugin for Bukkit and Fol
 * **Minigames**: Show game stats, time remaining, and player rankings
 * **Survival Servers**: Display player stats, economy info, and server events
 * **Faction Servers**: Show faction info, territory details, and war status
-
-## 🤝 Need Help?
-
-If you need assistance setting up ShyScoreboard, check out our detailed configuration guide or review the sample configuration file included with the plugin.

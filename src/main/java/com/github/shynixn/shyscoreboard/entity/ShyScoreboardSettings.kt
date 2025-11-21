@@ -45,7 +45,6 @@ class ShyScoreboardSettings(private val reloadFun: (ShyScoreboardSettings) -> Un
     var updatePermission: String = Permission.UPDATE.text
 
     var defaultScoreboards: List<Pair<String, String>> = listOf(
-        "scoreboard/blockball_scoreboard.yml" to "blockball_scoreboard.yml",
         "scoreboard/sample_scoreboard.yml" to "sample_scoreboard.yml"
     )
 

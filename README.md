@@ -4,9 +4,9 @@ ShyScoreboard is a non-flickering Scoreboard plugin for Bukkit and Folia based M
 
 ## Features
 
-* Create multiple scoreboards, which can be activated by permissions or commands
+* Create multiple scoreboards, which can be activated by permissions, commands or entering WorldGuard regions
 * All scoreboards are non-flickering
-* 32 character lines
+* Unlimited character lines in Minecraft Version 1.17 - Latest
 * PlaceHolderApi support
 * WorldGuard Flag support
 * Bukkit and Folia compatible
