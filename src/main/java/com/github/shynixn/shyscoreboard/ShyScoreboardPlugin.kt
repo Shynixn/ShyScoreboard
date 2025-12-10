@@ -75,10 +75,11 @@ class ShyScoreboardPlugin : JavaPlugin(), CoroutinePlugin {
                 Version.VERSION_1_21_R3,
                 Version.VERSION_1_21_R4,
                 Version.VERSION_1_21_R5,
-                Version.VERSION_1_21_R6
+                Version.VERSION_1_21_R6,
+                Version.VERSION_1_21_R7
             )
         } else {
-            listOf(Version.VERSION_1_21_R6)
+            listOf(Version.VERSION_1_21_R7)
         }
 
         if (!Version.serverVersion.isCompatible(*versions.toTypedArray())) {

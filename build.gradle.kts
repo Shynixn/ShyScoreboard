@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.11.0"
+version = "1.12.0"
 
 repositories {
     mavenCentral()
@@ -27,8 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.47")
-    implementation("com.github.shynixn.mcutils:packet:2025.51")
+    implementation("com.github.shynixn.mcutils:common:2025.49")
+    implementation("com.github.shynixn.mcutils:packet:2025.54")
     implementation("com.github.shynixn.mcutils:worldguard:2025.5")
 
     // Test
@@ -103,6 +103,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R3/**")
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R4/**")
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R5/**")
+    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R6/**")
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
     exclude("com/github/shynixn/mcutils/**")
     exclude("com/github/shynixn/mccoroutine/**")
