@@ -27,8 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.49")
-    implementation("com.github.shynixn.mcutils:packet:2025.54")
+    implementation("com.github.shynixn.mcutils:common:2025.50")
+    implementation("com.github.shynixn.mcutils:packet:2025.56")
     implementation("com.github.shynixn.mcutils:worldguard:2025.5")
 
     // Test
