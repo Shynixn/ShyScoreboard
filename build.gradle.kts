@@ -27,8 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.49")
-    implementation("com.github.shynixn.mcutils:packet:2025.54")
+    implementation("com.github.shynixn.mcutils:common:2025.50")
+    implementation("com.github.shynixn.mcutils:packet:2025.56")
     implementation("com.github.shynixn.mcutils:worldguard:2025.5")
 
     // Test
@@ -84,7 +84,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocatePluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocatePluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-latest.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\git\\mc\\plugins"))
+    destinationDirectory.set(File("C:\\git\\mc\\plugins"))
 
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_8_R3/**")
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_9_R2/**")
