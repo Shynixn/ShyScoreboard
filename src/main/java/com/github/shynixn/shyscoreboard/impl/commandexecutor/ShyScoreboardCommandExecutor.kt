@@ -2,9 +2,10 @@ package com.github.shynixn.shyscoreboard.impl.commandexecutor
 
 import com.github.shynixn.mccoroutine.folia.globalRegionDispatcher
 import com.github.shynixn.mccoroutine.folia.launch
-import com.github.shynixn.mcutils.common.CoroutinePlugin
+import com.github.shynixn.mcutils.common.CoroutineHandler
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
 import com.github.shynixn.mcutils.common.command.CommandBuilder
+import com.github.shynixn.mcutils.common.command.CommandService
 import com.github.shynixn.mcutils.common.command.Validator
 import com.github.shynixn.mcutils.common.language.LanguageItem
 import com.github.shynixn.mcutils.common.language.reloadTranslation
@@ -17,16 +18,19 @@ import com.github.shynixn.shyscoreboard.entity.ShyScoreboardSettings
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.plugin.Plugin
 import java.util.*
 
 class ShyScoreboardCommandExecutor(
     private val settings: ShyScoreboardSettings,
-    private val plugin: CoroutinePlugin,
+    private val plugin: Plugin,
     private val scoreboardService: ScoreboardService,
     private val language: ShyScoreboardLanguage,
     private val chatMessageService: ChatMessageService,
     private val repository: CacheRepository<ShyScoreboardMeta>,
-    private val placeHolderService: PlaceHolderService
+    private val placeHolderService: PlaceHolderService,
+    coroutineHandler: CoroutineHandler,
+    commandService: CommandService
 ) {
     private val senderHasToBePlayer: () -> String = {
         language.shyScoreboardCommandSenderHasToBePlayer.text
@@ -103,7 +107,7 @@ class ShyScoreboardCommandExecutor(
     }
 
     init {
-        CommandBuilder(plugin, settings.baseCommand, chatMessageService) {
+        commandService.registerCommand(CommandBuilder(coroutineHandler, plugin, settings.baseCommand, chatMessageService) {
             usage(language.shyScoreboardCommandUsage.text)
             description(language.shyScoreboardCommandDescription.text)
             aliases(settings.commandAliases)
@@ -186,7 +190,7 @@ class ShyScoreboardCommandExecutor(
                     sender.sendLanguageMessage(language.shyScoreboardReloadMessage)
                 }
             }.helpCommand()
-        }.build()
+        })
     }
 
     private fun updatePlayerScoreboard(sender: CommandSender, respawn: Boolean, player: Player) {
