@@ -3,8 +3,10 @@ package com.github.shynixn.shyscoreboard
 import com.github.shynixn.fasterxml.jackson.core.type.TypeReference
 import com.github.shynixn.mcutils.common.ConfigurationService
 import com.github.shynixn.mcutils.common.ConfigurationServiceImpl
-import com.github.shynixn.mcutils.common.CoroutinePlugin
+import com.github.shynixn.mcutils.common.CoroutineHandler
 import com.github.shynixn.mcutils.common.chat.ChatMessageService
+import com.github.shynixn.mcutils.common.command.CommandService
+import com.github.shynixn.mcutils.common.command.CommandServiceImpl
 import com.github.shynixn.mcutils.common.di.DependencyInjectionModule
 import com.github.shynixn.mcutils.common.placeholder.PlaceHolderService
 import com.github.shynixn.mcutils.common.repository.CacheRepository
@@ -40,7 +42,7 @@ class ShyScoreboardDependencyInjectionModule(
 
         // Params
         module.addService<Plugin>(plugin)
-        module.addService<CoroutinePlugin>(plugin)
+        module.addService<CoroutineHandler>(plugin)
         module.addService<ShyScoreboardLanguage>(language)
         module.addService<ShyScoreboardSettings>(settings)
         module.addService<PlaceHolderService>(placeHolderService)
@@ -67,6 +69,8 @@ class ShyScoreboardDependencyInjectionModule(
                 module.getService(),
                 module.getService(),
                 module.getService(),
+                module.getService(),
+                module.getService(),
                 module.getService()
             )
         }
@@ -87,8 +91,11 @@ class ShyScoreboardDependencyInjectionModule(
         module.addService<PacketService> {
             PacketServiceImpl(module.getService())
         }
+        module.addService<CommandService> {
+            CommandServiceImpl(module.getService())
+        }
         module.addService<ChatMessageService> {
-            ChatMessageServiceImpl(module.getService(), module.getService())
+            ChatMessageServiceImpl(module.getService(), module.getService(), module.getService())
         }
 
         // Developer Api

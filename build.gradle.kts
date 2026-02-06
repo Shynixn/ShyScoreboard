@@ -8,12 +8,12 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.12.0"
+version = "1.12.1"
 
 repositories {
     mavenCentral()
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven(System.getenv("SHYNIXN_MCUTILS_REPOSITORY_2025")) // All MCUTILS libraries are private and not OpenSource.
+    maven(System.getenv("SHYNIXN_MCUTILS_REPOSITORY_2026")) // All MCUTILS libraries are private and not OpenSource.
 }
 
 dependencies {
@@ -27,9 +27,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2025.50")
-    implementation("com.github.shynixn.mcutils:packet:2025.56")
-    implementation("com.github.shynixn.mcutils:worldguard:2025.5")
+    implementation("com.github.shynixn.mcutils:common:2026.2")
+    implementation("com.github.shynixn.mcutils:packet:2026.4")
+    implementation("com.github.shynixn.mcutils:worldguard:2026.1")
 
     // Test
     testImplementation(kotlin("test"))
@@ -84,7 +84,7 @@ tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tas
     dependsOn("relocatePluginJar")
     from(zipTree(File("./build/libs/" + (tasks.getByName("relocatePluginJar") as Jar).archiveFileName.get())))
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-latest.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\git\\mc\\plugins"))
+    // destinationDirectory.set(File(System.getenv("HOME"),"git/mc/plugins"))
 
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_8_R3/**")
     exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_9_R2/**")
