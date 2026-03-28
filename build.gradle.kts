@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.github.shynixn"
-version = "1.12.1"
+version = "1.13.0"
 
 repositories {
     mavenCentral()
@@ -27,8 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2026.2")
-    implementation("com.github.shynixn.mcutils:packet:2026.4")
+    implementation("com.github.shynixn.mcutils:common:2026.4")
+    implementation("com.github.shynixn.mcutils:packet:2026.9")
     implementation("com.github.shynixn.mcutils:worldguard:2026.1")
 
     // Test
@@ -37,19 +37,6 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.23.0")
 }
 
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
-/**
- * Include all but exclude debugging classes.
- */
 tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
     dependsOn("jar")
     archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-shadowjar.${archiveExtension.get()}")
@@ -61,151 +48,115 @@ tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
  * Create all plugin jar files.
  */
 tasks.register("pluginJars") {
-    dependsOn("pluginJarLatest")
-    dependsOn("pluginJarPremium")
-    dependsOn("pluginJarPremiumFolia")
-    dependsOn("pluginJarLegacy")
+    dependsOn("pluginJar-1.8.8-1.16.5-premium")
+    dependsOn("pluginJar-1.17.0-1.21.11-premium")
+    dependsOn("pluginJar-1.17.0-1.21.11-premium-folia")
+    dependsOn("pluginJar-26.1.0-latest-premium")
+    dependsOn("pluginJar-26.1.0-latest-premium-folia")
+    dependsOn("pluginJar-26.1.0-latest-free")
 }
 
-/**
- * Relocate Plugin Jar.
- */
-tasks.register("relocatePluginJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
-    dependsOn("shadowJar")
-    from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
-    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate.${archiveExtension.get()}")
-    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mcutils")
-}
+registerPluginJar("1.8.8-1.16.5-premium", "plugin-1.8.8-1.16.5.yml", isLegacy = true)
+registerPluginJar("1.17.0-1.21.11-premium", "plugin-1.17.0-1.21.11.yml")
+registerPluginJar("1.17.0-1.21.11-premium-folia", "plugin-1.17.0-1.21.11-folia.yml", isFolia = true)
+registerPluginJar("26.1.0-latest-premium", "plugin-26.1.0-latest.yml")
+registerPluginJar("26.1.0-latest-premium-folia", "plugin-26.1.0-latest-folia.yml", isFolia = true)
+registerPluginJar("26.1.0-latest-free", "plugin-26.1.0-latest.yml", excludeOldNms = true)
 
-/**
- * Create latest plugin jar file.
- */
-tasks.register("pluginJarLatest", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
-    dependsOn("relocatePluginJar")
-    from(zipTree(File("./build/libs/" + (tasks.getByName("relocatePluginJar") as Jar).archiveFileName.get())))
-    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-latest.${archiveExtension.get()}")
-    // destinationDirectory.set(File(System.getenv("HOME"),"git/mc/plugins"))
+fun registerPluginJar(
+    taskName: String,
+    pluginYml: String,
+    isFolia: Boolean = false,
+    excludeOldNms: Boolean = false,
+    isLegacy: Boolean = false,
+    destinationDir: String? = null
+) {
+    val relocateTaskName = "relocatePluginJar-$taskName"
+    val jarTaskName = "pluginJar-$taskName"
 
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_8_R3/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_9_R2/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_17_R1/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_18_R1/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_18_R2/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_19_R1/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_19_R2/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_19_R3/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R1/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R2/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R3/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R4/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R1/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R2/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R3/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R4/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R5/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R6/**")
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
-    exclude("com/github/shynixn/mcutils/**")
-    exclude("com/github/shynixn/mccoroutine/**")
-    exclude("com/github/shynixn/fasterxml/**")
-    exclude("kotlin/**")
-    exclude("org/**")
-    exclude("kotlinx/**")
-    exclude("javax/**")
-    exclude("plugin-folia.yml")
-    exclude("plugin-legacy.yml")
-}
+    // ── Step 1: relocation ────────────────────────────────────────────────────
+    tasks.register(relocateTaskName, com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
+        dependsOn("shadowJar")
+        from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
+        archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-${taskName}-relocate.${archiveExtension.get()}")
+        if (destinationDir != null) {
+            destinationDirectory.set(File(destinationDir))
+        }
 
-/**
- * Create premium plugin jar file.
- */
-tasks.register("pluginJarPremium", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
-    dependsOn("relocatePluginJar")
-    from(zipTree(File("./build/libs/" + (tasks.getByName("relocatePluginJar") as Jar).archiveFileName.get())))
-    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-premium.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\git\\mc\\plugins"))
+        relocate("com.github.shynixn.mcutils", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mcutils")
+        if (isLegacy) {
+            relocate(
+                "com.github.shynixn.mccoroutine",
+                "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mccoroutine"
+            )
+            relocate(
+                "com.github.shynixn.fasterxml",
+                "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.fasterxml"
+            )
+            relocate("kotlin", "com.github.shynixn.shyscoreboard.lib.kotlin")
+            relocate("kotlinx", "com.github.shynixn.shyscoreboard.lib.kotlinx")
+            relocate("org.intellij", "com.github.shynixn.shyscoreboard.lib.org.intellij")
+            relocate("org.jetbrains", "com.github.shynixn.shyscoreboard.lib.org.jetbrains")
+            relocate("javax", "com.github.shynixn.shyscoreboard.lib.javax")
+        }
+    }
 
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
-    exclude("com/github/shynixn/mcutils/**")
-    exclude("com/github/shynixn/mccoroutine/**")
-    exclude("com/github/shynixn/fasterxml/**")
-    exclude("kotlin/**")
-    exclude("org/**")
-    exclude("kotlinx/**")
-    exclude("javax/**")
-    exclude("plugin-folia.yml")
-    exclude("plugin-legacy.yml")
-}
+    // ── Step 2: excludes + plugin.yml selection ───────────────────────────────
+    tasks.register(jarTaskName, com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
+        dependsOn(relocateTaskName)
+        from(zipTree(File("./build/libs/" + (tasks.getByName(relocateTaskName) as Jar).archiveFileName.get())))
+        archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-${taskName}.${archiveExtension.get()}")
 
-/**
- * Relocate Plugin Folia Jar.
- */
-tasks.register("relocateFoliaPluginJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
-    dependsOn("shadowJar")
-    from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
-    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-relocate-folia.${archiveExtension.get()}")
-    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mcutils")
-    exclude("plugin.yml")
-    rename("plugin-folia.yml", "plugin.yml")
-}
+        // Keep only the correct plugin yml
+        rename(pluginYml, "plugin.yml")
+        val allPluginYmls = listOf(
+            "plugin-1.8.8-1.16.5.yml",
+            "plugin-1.17.0-1.21.11.yml",
+            "plugin-1.17.0-1.21.11-folia.yml",
+            "plugin-26.1.0-latest.yml",
+            "plugin-26.1.0-latest-folia.yml"
+        )
+        for (yml in allPluginYmls) {
+            if (yml != pluginYml) exclude(yml)
+        }
 
-/**
- * Create premium folia plugin jar file.
- */
-tasks.register("pluginJarPremiumFolia", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
-    dependsOn("relocateFoliaPluginJar")
-    from(zipTree(File("./build/libs/" + (tasks.getByName("relocateFoliaPluginJar") as Jar).archiveFileName.get())))
-    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-premium-folia.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\temp\\Folia\\plugins"))
+        if (!isFolia) {
+            exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
+        }
 
-    exclude("com/github/shynixn/mcutils/**")
-    exclude("com/github/shynixn/mccoroutine/**")
-    exclude("com/github/shynixn/fasterxml/**")
-    exclude("kotlin/**")
-    exclude("org/**")
-    exclude("kotlinx/**")
-    exclude("javax/**")
-    exclude("plugin-folia.yml")
-    exclude("plugin-legacy.yml")
-}
+        exclude("com/github/shynixn/mcutils/**")
+        exclude("com/github/shynixn/mccoroutine/**")
+        exclude("com/github/shynixn/fasterxml/**")
+        exclude("kotlin/**")
+        exclude("org/**")
+        exclude("kotlinx/**")
+        exclude("javax/**")
 
-/**
- * Relocate legacy plugin jar file.
- */
-tasks.register("relocateLegacyPluginJar", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
-    dependsOn("shadowJar")
-    from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
-    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy-relocate.${archiveExtension.get()}")
-    relocate("com.github.shynixn.mcutils", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mcutils")
-    relocate("com.github.shynixn.mccoroutine", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mccoroutine")
-    relocate("com.github.shynixn.fasterxml", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.fasterxml")
-    relocate("kotlin", "com.github.shynixn.shyscoreboard.lib.kotlin")
-    relocate("kotlinx", "com.github.shynixn.shyscoreboard.lib.kotlinx")
-    relocate("org.intellij", "com.github.shynixn.shyscoreboard.lib.org.intellij")
-    relocate("org.jetbrains", "com.github.shynixn.shyscoreboard.lib.org.jetbrains")
-    relocate("javax", "com.github.shynixn.shyscoreboard.lib.javax")
-    exclude("plugin.yml")
-    rename("plugin-legacy.yml", "plugin.yml")
-}
-
-/**
- * Create legacy plugin jar file.
- */
-tasks.register("pluginJarLegacy", com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar::class.java) {
-    dependsOn("relocateLegacyPluginJar")
-    from(zipTree(File("./build/libs/" + (tasks.getByName("relocateLegacyPluginJar") as Jar).archiveFileName.get())))
-    archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-legacy.${archiveExtension.get()}")
-    // destinationDirectory.set(File("C:\\temp\\plugins"))
-    exclude("com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/common/FoliaMarker.class")
-    exclude("com/github/shynixn/mcutils/**")
-    exclude("com/github/shynixn/mccoroutine/**")
-    exclude("com/github/shynixn/fasterxml/**")
-    exclude("kotlin/**")
-    exclude("org/**")
-    exclude("kotlinx/**")
-    exclude("javax/**")
-    exclude("plugin-folia.yml")
-    exclude("plugin-legacy.yml")
+        if (excludeOldNms) {
+            val oldNmsPaths = listOf(
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_8_R3/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_9_R2/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_17_R1/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_18_R1/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_18_R2/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_19_R1/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_19_R2/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_19_R3/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R1/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R2/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R3/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_20_R4/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R1/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R2/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R3/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R4/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R5/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R6/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R7/**"
+            )
+            for (path in oldNmsPaths) exclude(path)
+        }
+    }
 }
 
 tasks.register("languageFile") {
@@ -244,8 +195,10 @@ tasks.register("languageFile") {
     implContents.add("import com.github.shynixn.shyscoreboard.contract.ShyScoreboardLanguage")
     implContents.add("")
     implContents.add("class ShyScoreboardLanguageImpl : ShyScoreboardLanguage {")
-    implContents.add(" override val names: List<String>\n" +
-            "  get() = listOf(\"en_us\")")
+    implContents.add(
+        " override val names: List<String>\n" +
+                "  get() = listOf(\"en_us\")"
+    )
 
     for (i in 0 until lines.size) {
         val key = lines[i]
@@ -256,15 +209,15 @@ tasks.register("languageFile") {
 
             println("_")
             var j = i
-            while (true){
-                if(lines[j].contains("text:")){
+            while (true) {
+                if (lines[j].contains("text:")) {
                     text = lines[j]
                     break
                 }
                 j++
             }
 
-            implContents.add(" override var ${key.replace(":","")} = LanguageItem(${text.replace("  text: ","")})")
+            implContents.add(" override var ${key.replace(":", "")} = LanguageItem(${text.replace("  text: ", "")})")
             implContents.add("")
         }
     }
@@ -278,6 +231,14 @@ tasks.register("languageFile") {
     }
 }
 
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 tasks.register("printVersion") {
     println(version)
 }
