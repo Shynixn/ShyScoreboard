@@ -20,7 +20,6 @@ ShyScoreboard is a modern, high-performance scoreboard plugin for Bukkit and Fol
 ### Compatibility
 * **📦 Server Support**: Bukkit and Folia compatible
 * **🔌 Plugin Integration**: PlaceholderAPI and WorldGuard support
-* **🎯 Version Range**: Supports Minecraft 1.8.R1 through 1.21.R7
 
 ## 📚 Documentation
 
