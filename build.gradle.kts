@@ -69,7 +69,7 @@ fun registerPluginJar(
     isFolia: Boolean = false,
     excludeOldNms: Boolean = false,
     isLegacy: Boolean = false,
-    destinationDir: String? = null
+    debug: Boolean = false
 ) {
     val relocateTaskName = "relocatePluginJar-$taskName"
     val jarTaskName = "pluginJar-$taskName"
@@ -79,10 +79,6 @@ fun registerPluginJar(
         dependsOn("shadowJar")
         from(zipTree(File("./build/libs/" + (tasks.getByName("shadowJar") as Jar).archiveFileName.get())))
         archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-${taskName}-relocate.${archiveExtension.get()}")
-        if (destinationDir != null) {
-            destinationDirectory.set(File(destinationDir))
-        }
-
         relocate("com.github.shynixn.mcutils", "com.github.shynixn.shyscoreboard.lib.com.github.shynixn.mcutils")
         if (isLegacy) {
             relocate(
@@ -106,7 +102,9 @@ fun registerPluginJar(
         dependsOn(relocateTaskName)
         from(zipTree(File("./build/libs/" + (tasks.getByName(relocateTaskName) as Jar).archiveFileName.get())))
         archiveFileName.set("${archiveBaseName.get()}-${archiveVersion.get()}-${taskName}.${archiveExtension.get()}")
-
+        if (debug) {
+            destinationDirectory.set(File(System.getenv("HOME"), "git/mc/plugins"))
+        }
         // Keep only the correct plugin yml
         rename(pluginYml, "plugin.yml")
         val allPluginYmls = listOf(

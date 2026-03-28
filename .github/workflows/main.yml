@@ -48,48 +48,70 @@ jobs:
           draft: true
           prerelease: false
 
-      - name: Upload Latest Bukkit Release to Github
+      - name: Upload ShyScoreboard-1.8.8-1.16.5-Premium.jar
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-latest.jar
-          asset_name: ShyScoreboard.jar
+          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-1.8.8-1.16.5-premium.jar
+          asset_name: ShyScoreboard-1.8.8-1.16.5-Premium.jar
           asset_content_type: application/jar
 
-      - name: Upload Premium Bukkit Release to Github
+      - name: Upload ShyScoreboard-1.17.0-1.21.11-Premium.jar
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-premium.jar
-          asset_name: ShyScoreboard-Premium.jar
+          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-1.17.0-1.21.11-premium.jar
+          asset_name: ShyScoreboard-1.17.0-1.21.11-Premium.jar
           asset_content_type: application/jar
 
-      - name: Upload Premium Folia Release to Github
+      - name: Upload ShyScoreboard-1.17.0-1.21.11-Premium-Folia.jar
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-premium-folia.jar
-          asset_name: ShyScoreboard-Premium-Folia.jar
+          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-1.17.0-1.21.11-premium-folia.jar
+          asset_name: ShyScoreboard-1.17.0-1.21.11-Premium-Folia.jar
           asset_content_type: application/jar
 
-      - name: Upload Legacy Bukkit Release to Github
+      - name: Upload ShyScoreboard-26.1.0-latest-Premium.jar
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-legacy.jar
-          asset_name: ShyScoreboard-Legacy.jar
+          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-26.1.0-latest-premium.jar
+          asset_name: ShyScoreboard-26.1.0-latest-Premium.jar
+          asset_content_type: application/jar
+
+      - name: Upload ShyScoreboard-26.1.0-latest-Premium-Folia.jar
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-26.1.0-latest-premium-folia.jar
+          asset_name: ShyScoreboard-26.1.0-latest-Premium-Folia.jar
+          asset_content_type: application/jar
+
+      - name: Upload ShyScoreboard-26.1.0-latest-Free.jar
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/work/ShyScoreboard/ShyScoreboard/build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-26.1.0-latest-free.jar
+          asset_name: ShyScoreboard-26.1.0-latest-Free.jar
           asset_content_type: application/jar
 
       - uses: Shynixn/repository-m2-deploy-action@v1.1.0
