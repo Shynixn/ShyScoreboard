@@ -145,17 +145,15 @@ jobs:
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
         env:
           PAPOA_API_KEY: ${{ secrets.PAPOA_API_KEY }}
+          PAPOA_PASSWORD: ${{ secrets.PAPOA_PASSWORD }}
         run: |
-          # Rename files
-          pwd
           mv ./build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-26.1.0-latest-premium-folia.jar ./ShyScoreboard-26.1.0-latest-Premium-Folia.jar
           mv ./build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-1.17.0-1.21.11-premium-folia.jar ./ShyScoreboard-1.17.0-1.21.11-Premium-Folia.jar
-          # Publish via Papoa https://github.com/Shynixn/PatreonPostApi
           wget -O papoa https://github.com/Shynixn/PatreonPostApi/releases/latest/download/papoa-linux-x64
           chmod +x papoa
           ./papoa post create \
             --title "ShyScoreboard for Folia v${{ env.RELEASE_VERSION }} (1.8.9-26.1.2)" \
-            --content ${{ env.RELEASE_BODY }} \
+            --content "$RELEASE_BODY" \
             --content-format text/markdown \
             --tier-name "Elite" \
             --tier-name "Legendary" \
@@ -170,7 +168,7 @@ jobs:
             --photo-attachment-file-name "title.png" \
             --attachment-file-name "ShyScoreboard-26.1.0-latest-Premium-Folia.jar" \
             --attachment-file-name "ShyScoreboard-1.17.0-1.21.11-Premium-Folia.jar" \
-            --password "${{ secrets.PAPOA_PASSWORD }}"
+            --password "$PAPOA_PASSWORD"
 
   Documentation:
     runs-on: ubuntu-latest
