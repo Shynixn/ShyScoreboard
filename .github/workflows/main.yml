@@ -35,6 +35,18 @@ jobs:
           ./gradlew build pluginJars
           echo "RELEASE_VERSION=$(./gradlew -q printVersion)" >> $GITHUB_ENV
 
+      - name: Parse Changelog
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        run: |
+          VERSION=${{ env.RELEASE_VERSION }}
+          CHANGES=$(awk '/^---/{exit} /^## Release /{found=1; next} found{print}' CHANGELOG.md)
+          FOOTER=$(awk '/^## Footer/{found=1; next} found{print}' CHANGELOG.md)
+          FOOTER="${FOOTER//<version>/$VERSION}"
+          BODY="$CHANGES"$'\n'"$FOOTER"
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$BODY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Create Github Release
         if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
         id: create_release
@@ -42,7 +54,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body: "This release was automatically created by Github Actions. Please wait until the author manually sets the patchnotes for this release."
+          body: ${{ env.RELEASE_BODY }}
           tag_name: ${{ env.RELEASE_VERSION }}
           release_name: Release ${{ env.RELEASE_VERSION }}
           draft: true
@@ -128,6 +140,37 @@ jobs:
           github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           github-username: 'Shynixn'
           github-repository: 'm2'
+
+      - name: Publish Patreon Release
+        if: "contains(github.event.head_commit.message, '--release') && contains(github.ref, 'main')"
+        env:
+          PAPOA_API_KEY: ${{ secrets.PAPOA_API_KEY }}
+        run: |
+          # Rename files
+          pwd
+          mv ./build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-26.1.0-latest-premium-folia.jar ./ShyScoreboard-26.1.0-latest-Premium-Folia.jar
+          mv ./build/libs/shyscoreboard-${{ env.RELEASE_VERSION }}-1.17.0-1.21.11-premium-folia.jar ./ShyScoreboard-1.17.0-1.21.11-Premium-Folia.jar
+          # Publish via Papoa https://github.com/Shynixn/PatreonPostApi
+          wget -O papoa https://github.com/Shynixn/PatreonPostApi/releases/latest/download/papoa-linux-x64
+          chmod +x papoa
+          ./papoa post create \
+            --title "ShyScoreboard for Folia v${{ env.RELEASE_VERSION }} (1.8.9-26.1.2)" \
+            --content ${{ env.RELEASE_BODY }} \
+            --content-format text/markdown \
+            --tier-name "Elite" \
+            --tier-name "Legendary" \
+            --collection-name "ShyScoreboard" \
+            --tag shyscoreboard \
+            --tag minecraft \
+            --tag plugin \
+            --ttl-days 1 \
+            --file ./ShyScoreboard-26.1.0-latest-Premium-Folia.jar \
+            --file ./ShyScoreboard-1.17.0-1.21.11-Premium-Folia.jar \
+            --file /home/runner/work/ShyScoreboard/ShyScoreboard/docs/wiki/docs/assets/title.png \
+            --photo-attachment-file-name "title.png" \
+            --attachment-file-name "ShyScoreboard-26.1.0-latest-Premium-Folia.jar" \
+            --attachment-file-name "ShyScoreboard-1.17.0-1.21.11-Premium-Folia.jar" \
+            --password "${{ secrets.PAPOA_PASSWORD }}"
 
   Documentation:
     runs-on: ubuntu-latest
