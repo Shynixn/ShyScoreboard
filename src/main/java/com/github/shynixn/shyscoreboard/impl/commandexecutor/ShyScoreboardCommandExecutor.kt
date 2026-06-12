@@ -52,14 +52,6 @@ class ShyScoreboardCommandExecutor(
                 return null
             }
         }
-
-        override suspend fun message(sender: CommandSender, prevArgs: List<Any>, openArgs: List<String>): String {
-            return placeHolderService.resolvePlaceHolder(
-                language.shyScoreboardPlayerNotFoundMessage.text,
-                null,
-                mapOf("0" to openArgs[0])
-            )
-        }
     }
 
     private val scoreboardTabs: (CommandSender) -> List<String> = {
