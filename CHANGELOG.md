@@ -1,5 +1,13 @@
 # Changelog
 
+## Release 1.13.4
+
+### Bugs/Issues
+
+* #53 Fixed a bug where a race condition could occur when a player leaves the server while their scoreboard is being updated.
+
+---
+
 ## Release 1.13.3
 
 ### Changes
