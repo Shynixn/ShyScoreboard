@@ -114,6 +114,9 @@ class ScoreboardServiceImpl(
             }
             flags
         }
+        if (!player.isOnline) {
+            return
+        }
         val allScoreboardMetas = repository.getAll()
         updatePlayerScoreboard(player, allScoreboardMetas, flags)
     }
@@ -134,7 +137,7 @@ class ScoreboardServiceImpl(
     override fun close() {
         val scoreboards = scoreboardCache.values.toTypedArray()
         for (scoreboard in scoreboards) {
-            scoreboards.clone()
+            scoreboard.close()
         }
         scoreboardCache.clear()
         commandScoreboards.clear()
@@ -232,6 +235,9 @@ class ScoreboardServiceImpl(
 
         val allScoreboardMetas = repository.getAll()
         for (playerContainer in playerContainers) {
+            if (!playerContainer.first.isOnline) {
+                continue
+            }
             updatePlayerScoreboard(playerContainer.first, allScoreboardMetas, playerContainer.second)
         }
     }
