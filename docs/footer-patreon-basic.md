@@ -8,6 +8,6 @@
 ### Need help or support?
 
 * https://shynixn.github.io/ShyScoreboard
-* I normally reply in 2 business days on Discord.
-* Link your Discord name to Patreon to get prioritised support.
+* I normally reply in 2 business days on [Discord](https://discord.gg/Y27tx8Y).
+* Link your Discord name to Patreon to get prioritized support.
 
