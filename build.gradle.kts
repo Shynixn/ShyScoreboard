@@ -27,8 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     // Custom dependencies
-    implementation("com.github.shynixn.mcutils:common:2026.7")
-    implementation("com.github.shynixn.mcutils:packet:2026.12")
+    implementation("com.github.shynixn.mcutils:common:2026.11")
+    implementation("com.github.shynixn.mcutils:packet:2026.23")
     implementation("com.github.shynixn.mcutils:worldguard:2026.1")
 
     // Test
@@ -150,7 +150,8 @@ fun registerPluginJar(
                 "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R4/**",
                 "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R5/**",
                 "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R6/**",
-                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R7/**"
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R7/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v26_1_R1/**"
             )
             for (path in oldNmsPaths) exclude(path)
         }

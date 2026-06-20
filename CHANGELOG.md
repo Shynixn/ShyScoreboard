@@ -1,18 +1,14 @@
 # Changelog
 
-## Release 1.13.4
+## Release 1.14.0
+
+### Changes
+
+* #56 Added support for Minecraft 26.2.x
 
 ### Bugs/Issues
 
 * #53 Fixed a bug where a race condition could occur when a player leaves the server while their scoreboard is being updated.
-
----
-
-## Release 1.13.3
-
-### Changes
-
-* #49 Test Papoa
 
 ---
 
