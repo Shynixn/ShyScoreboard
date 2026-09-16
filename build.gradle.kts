@@ -151,7 +151,8 @@ fun registerPluginJar(
                 "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R5/**",
                 "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R6/**",
                 "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v1_21_R7/**",
-                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v26_1_R1/**"
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v26_1_R1/**",
+                "com/github/shynixn/shyscoreboard/lib/com/github/shynixn/mcutils/packet/nms/v26_2_R1/**"
             )
             for (path in oldNmsPaths) exclude(path)
         }
